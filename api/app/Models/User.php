@@ -13,6 +13,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable;
 
+    public const ADMIN = 'admin';
+    public const MANAGER = 'manager';
+    public const USER = 'user';
+
     /**
      * The attributes that are mass assignable.
      *
