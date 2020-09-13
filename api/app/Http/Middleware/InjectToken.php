@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
-class ExampleMiddleware
+class InjectToken
 {
     /**
      * Handle an incoming request.
@@ -15,6 +16,11 @@ class ExampleMiddleware
      */
     public function handle($request, Closure $next)
     {
+
+        if (!$request->headers->has('Authorization') && $request->cookies->has('token')) {
+            Auth::setToken($request->cookies->get('token'));
+        }
+
         return $next($request);
     }
 }
