@@ -20,5 +20,7 @@ return [
             'driver' => 'eloquent',
             'model' => User::class
         ]
-    ]
+    ],
+
+    'cookie' => env('JWT_COOKIE_NAME', 'token')
 ];

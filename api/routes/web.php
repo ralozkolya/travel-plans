@@ -25,4 +25,8 @@ $router->group([ 'prefix' => 'api/v1' ], function () use ($router) {
         $router->get('users', 'UsersController@list');
         $router->get('users/{id}', 'UsersController@show');
     });
+
+    $router->get('test', function () {
+        return config('auth.guards');
+    });
 });

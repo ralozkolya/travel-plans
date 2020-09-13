@@ -16,9 +16,10 @@ class InjectToken
      */
     public function handle($request, Closure $next)
     {
+        $tokenName = config('auth.cookie');
 
-        if (!$request->headers->has('Authorization') && $request->cookies->has('token')) {
-            Auth::setToken($request->cookies->get('token'));
+        if (!$request->headers->has('Authorization') && $request->cookies->has($tokenName)) {
+            Auth::setToken($request->cookies->get($tokenName));
         }
 
         return $next($request);
