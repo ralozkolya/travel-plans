@@ -54,12 +54,12 @@ class AuthController extends Controller {
 
     private function respondWithToken($token) {
 
-        $expires_in = Auth::factory()->getTTL();
+        $expires_in = Auth::factory()->getTTL() * 60;
 
         return response([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $expires_in * 60
+            'expires_in' => $expires_in
         ])->cookie(new Cookie('token', $token, time() + $expires_in));
     }
 }
