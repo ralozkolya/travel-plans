@@ -21,5 +21,8 @@ $router->group([ 'prefix' => 'api/v1' ], function () use ($router) {
         // Restricted endpoints go here
 
         $router->post('logout', 'AuthController@logout');
+
+        $router->get('users', 'UsersController@list');
+        $router->get('users/{id}', 'UsersController@show');
     });
 });
