@@ -26,9 +26,7 @@ $router->group([ 'prefix' => 'api/v1' ], function () use ($router) {
         $router->get('users/{id}', 'UsersController@show');
         $router->patch('users/{id}', 'UsersController@edit');
         $router->delete('users/{id}', 'UsersController@delete');
-    });
 
-    $router->get('test', function () {
-        return config('auth.guards');
+        $router->get('trips', 'TripsController@index');
     });
 });
