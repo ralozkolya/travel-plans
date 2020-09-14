@@ -22,6 +22,7 @@ class AuthController extends Controller {
 
         $user = new User();
         $user->fill($input);
+        $user->password = $input['password'];
         $user->role = User::USER;
 
         $user->save();
