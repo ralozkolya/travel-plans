@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class AuthController extends Controller {
-
-    public function register(Request $request) {
-
+class AuthController extends Controller
+{
+    public function register(Request $request)
+    {
         $this->validate($request, [
             'email' => 'required|email|unique:users|max:256',
             'name' => 'required|max:256',
@@ -30,8 +30,8 @@ class AuthController extends Controller {
         return $user;
     }
 
-    public function login(Request $request) {
-
+    public function login(Request $request)
+    {
         $credentials = $request->only('email', 'password');
         $token = Auth::attempt($credentials);
 
@@ -44,14 +44,14 @@ class AuthController extends Controller {
         return $this->respondWithToken($token);
     }
 
-    public function logout() {
-
+    public function logout()
+    {
         Auth::logout();
         return response(null, 204);
     }
 
-    private function respondWithToken($token) {
-
+    private function respondWithToken($token)
+    {
         $expiresIn = Auth::factory()->getTTL() * 60;
         $tokenName = config('auth.cookie');
 

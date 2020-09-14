@@ -8,21 +8,24 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class UsersController extends Controller {
+class UsersController extends Controller
+{
 
-    public function index() {
+    public function index()
+    {
         Gate::authorize('list', User::class);
         return User::paginate(10);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $user = User::findOrFail($id);
         Gate::authorize('show', $user);
         return $user;
     }
 
-    public function edit(Request $request, $id) {
-
+    public function edit(Request $request, $id)
+    {
         $this->validate($request, [
             'name' => 'max:256',
             'password' => 'confirmed|min:6',
@@ -41,8 +44,8 @@ class UsersController extends Controller {
         return response(null, 204);
     }
 
-    public function delete($id) {
-
+    public function delete($id)
+    {
         $user = User::findOrFail($id);
         Gate::authorize('delete', $user);
 
