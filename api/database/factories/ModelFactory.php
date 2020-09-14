@@ -20,5 +20,13 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
+        'password' => 'password',
+        'role' => User::USER,
     ];
 });
+
+// $factory->state(User::class, 'admin', function (Faker $faker) use ($factory) {
+
+//     $user = $factory->raw(User::class);
+//     return array_merge($user, [ 'role' => User::ADMIN ]);
+// });
