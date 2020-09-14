@@ -37,13 +37,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    public function setPasswordAttribute($value) {
-
+    public function setPasswordAttribute($value)
+    {
         if (password_get_info($value)['algoName'] === 'unknown') {
             $value = Hash::make($value, [ 'rounds' => 12 ]);
         }
 
         $this->attributes['password'] = $value;
+    }
+
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
     }
 
     public function getJWTIdentifier()
