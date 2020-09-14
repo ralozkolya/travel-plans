@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function setPasswordAttribute($value) {
 
-        if (mb_strlen($value) !== 60 || mb_strpos($value, '$2y$') !== 0) {
+        if (password_get_info($value)['algoName'] === 'unknown') {
             $value = Hash::make($value, [ 'rounds' => 12 ]);
         }
 
