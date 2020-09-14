@@ -32,13 +32,8 @@ class UsersController extends Controller {
         $user = User::findOrFail($id);
         Gate::authorize('update', [ $user, $request->get('role') ]);
 
-        $password = $request->get('password');
-
-        if ($password) {
-            $user->password = Hash::make($password);
-        }
-
         $user->name = $request->get('name', $user->name);
+        $user->password = $request->get('password', $user->password);
         $user->role = $request->get('role', $user->role);
 
         $user->save();
