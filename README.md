@@ -16,7 +16,7 @@ Requirements:
 
 Project is organized into 2 directories - `api` and `ui`. Each contains a standalone project and can be built, tested and deployed independently.
 
-API is implemented using [Lumen framework](https://lumen.laravel.com/), backed by [SQLite Database](https://sqlite.org/)
+API is implemented using [Lumen framework](https://lumen.laravel.com/), backed by [MySQL](https://www.mysql.com/)
 
 UI is implemented using [Angular](https://angular.io/)
 
