@@ -60,7 +60,8 @@ class AuthController extends Controller {
         return response([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $expiresIn
+            'expires_in' => $expiresIn,
+            'user' => Auth::user()
         ])->cookie(new Cookie($tokenName, $token, time() + $expiresIn));
     }
 }

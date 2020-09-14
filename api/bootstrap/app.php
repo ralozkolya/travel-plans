@@ -78,7 +78,6 @@ $app->middleware([
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
-    'users' => App\Http\Middleware\ManageUsers::class,
 ]);
 
 /*

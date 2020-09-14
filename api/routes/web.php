@@ -22,8 +22,10 @@ $router->group([ 'prefix' => 'api/v1' ], function () use ($router) {
 
         $router->post('logout', 'AuthController@logout');
 
-        $router->get('users', 'UsersController@list');
+        $router->get('users', 'UsersController@index');
         $router->get('users/{id}', 'UsersController@show');
+        $router->patch('users/{id}', 'UsersController@edit');
+        $router->delete('users/{id}', 'UsersController@delete');
     });
 
     $router->get('test', function () {
