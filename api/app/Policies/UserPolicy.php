@@ -7,46 +7,47 @@ use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
-    public function list(User $user) {
-        return $user->role === User::ADMIN
-            || $user->role === User::MANAGER;
+    public function list(User $user)
+    {
+        return $user->isAdmin() || $user->isManager();
     }
 
-    public function show(User $user, $target) {
+    public function show(User $user, $target)
+    {
         return $this->list($user)
             || $user->id === $target->id;
     }
 
-    public function update(User $user, $target, $role = null) {
-
+    public function update(User $user, $target, $role = null)
+    {
         // Admin can always change anything
-        if ($user->role === User::ADMIN) {
+        if ($user->isAdmin()) {
             return true;
         }
 
         // Manager is only allowed to change regular users, promote them to managers, or demote themselves
-        if ($user->role === User::MANAGER) {
+        if ($user->isManager()) {
             return $role !== User::ADMIN
-                && ($target->role === User::USER || $user->id === $target->id);
+                && ($target->isUser() || $user->id === $target->id);
         }
 
         // Otherwise no promotions and only updating oneselves
         return !$role && $user->id === $target->id;
     }
 
-    public function delete(User $user, $target) {
-
+    public function delete(User $user, $target)
+    {
         // Admin can always change anything, unless he's deleting the last admin
-        if ($user->role === User::ADMIN) {
-            if ($target->role === User::ADMIN) {
-                $admins = User::where([ 'role' => User::ADMIN ])->get();
-                return count($admins) > 1 ? true : Response::deny('Deleting only admin left');
+        if ($user->isAdmin()) {
+            if ($target->isAdmin()) {
+                $count = User::where([ 'role' => User::ADMIN ])->count();
+                return $count > 1 ? true : Response::deny('Deleting only admin left');
             }
             return true;
         }
 
         // Manager can only delete regular users, or themselves
-        if ($user->role === User::MANAGER) {
+        if ($user->isManager()) {
             return $target->role === User::USER || $user->id === $target->id;
         }
 

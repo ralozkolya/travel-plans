@@ -13,13 +13,14 @@ class CreateTripsTable extends Migration
      */
     public function up()
     {
+        // TODO: check why timestamp() fails
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('destination', 256);
-            $table->timestamp('start_date')->nullable();
-            $table->timestamp('end_date')->nullable();
-            $table->string('comment', 1024);
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->string('comment', 1024)->nullable();
             $table->timestamps();
         });
     }

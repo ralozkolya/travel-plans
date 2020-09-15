@@ -37,6 +37,21 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
+    public function isAdmin()
+    {
+        return $this->role === User::ADMIN;
+    }
+
+    public function isManager()
+    {
+        return $this->role === User::MANAGER;
+    }
+
+    public function isUser()
+    {
+        return $this->role === User::USER;
+    }
+
     public function setPasswordAttribute($value)
     {
         if (password_get_info($value)['algoName'] === 'unknown') {

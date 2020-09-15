@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Trip;
 use App\Models\User;
+use App\Policies\TripPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -38,5 +40,6 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(Trip::class, TripPolicy::class);
     }
 }

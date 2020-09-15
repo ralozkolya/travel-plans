@@ -24,9 +24,12 @@ $router->group([ 'prefix' => 'api/v1' ], function () use ($router) {
 
         $router->get('users', 'UsersController@index');
         $router->get('users/{id}', 'UsersController@show');
-        $router->patch('users/{id}', 'UsersController@edit');
-        $router->delete('users/{id}', 'UsersController@delete');
+        $router->patch('users/{id}', 'UsersController@update');
+        $router->delete('users/{id}', 'UsersController@destroy');
 
         $router->get('trips', 'TripsController@index');
+        $router->post('trips', 'TripsController@store');
+        $router->patch('trips/{id}', 'TripsController@update');
+        $router->delete('trips/{id}', 'TripsController@destroy');
     });
 });

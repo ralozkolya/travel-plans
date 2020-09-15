@@ -24,7 +24,7 @@ class UsersController extends Controller
         return $user;
     }
 
-    public function edit(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'max:256|required_without_all:password,role',
@@ -44,7 +44,7 @@ class UsersController extends Controller
         return response(null, 204);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $user = User::findOrFail($id);
         Gate::authorize('delete', $user);
