@@ -40,7 +40,7 @@ class TripsController extends Controller
 
         $trip->save();
 
-        return $trip;
+        return response($trip, 201);
     }
 
     public function update(Request $request, $id)

@@ -27,7 +27,7 @@ class AuthController extends Controller
 
         $user->save();
 
-        return $user;
+        return response($user, 201);
     }
 
     public function login(Request $request)
