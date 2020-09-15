@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
+    private $perPage = 20;
 
     public function index()
     {
         Gate::authorize('list', User::class);
-        return User::paginate(10);
+        return User::paginate($this->perPage);
     }
 
     public function show($id)
