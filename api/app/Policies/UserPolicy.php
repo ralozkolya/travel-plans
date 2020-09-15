@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
@@ -35,8 +36,12 @@ class UserPolicy
 
     public function delete(User $user, $target) {
 
-        // Admin can always change anything
+        // Admin can always change anything, unless he's deleting the last admin
         if ($user->role === User::ADMIN) {
+            if ($target->role === User::ADMIN) {
+                $admins = User::where([ 'role' => User::ADMIN ])->get();
+                return count($admins) > 1 ? true : Response::deny('Deleting only admin left');
+            }
             return true;
         }
 
