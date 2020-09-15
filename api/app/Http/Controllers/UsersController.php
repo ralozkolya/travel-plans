@@ -27,9 +27,9 @@ class UsersController extends Controller
     public function edit(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'max:256',
-            'password' => 'confirmed|min:6',
-            'role' => Rule::in(User::ROLES)
+            'name' => 'max:256|required_without_all:password,role',
+            'password' => 'confirmed|min:6|required_without_all:name,role',
+            'role' => [ Rule::in(User::ROLES), 'required_without_all:name,password' ]
         ]);
 
         $user = User::findOrFail($id);
