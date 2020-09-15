@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Laravel\Lumen\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -14,5 +15,17 @@ abstract class TestCase extends BaseTestCase
     public function createApplication()
     {
         return require __DIR__.'/../bootstrap/app.php';
+    }
+
+    protected function createUsers()
+    {
+        return [
+            'user1' => factory(User::class)->create(),
+            'user2' => factory(User::class)->create(),
+            'manager1' => factory(User::class)->create([ 'role' => User::MANAGER ]),
+            'manager2' => factory(User::class)->create([ 'role' => User::MANAGER ]),
+            'admin1' => factory(User::class)->create([ 'role' => User::ADMIN ]),
+            'admin2' => factory(User::class)->create([ 'role' => User::ADMIN ]),
+        ];
     }
 }
