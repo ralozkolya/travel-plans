@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
@@ -52,5 +53,10 @@ class UsersController extends Controller
         $user->delete();
 
         return response(null, 204);
+    }
+
+    public function whoami()
+    {
+        return Auth::user();
     }
 }

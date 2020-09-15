@@ -24,6 +24,7 @@ $router->group([ 'prefix' => 'api/v1' ], function () use ($router) {
 
         $router->get('users', 'UsersController@index');
         $router->get('users/{id}', 'UsersController@show');
+        $router->get('whoami', 'UsersController@whoami');
         $router->patch('users/{id}', 'UsersController@update');
         $router->delete('users/{id}', 'UsersController@destroy');
 
