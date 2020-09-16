@@ -1,7 +1,10 @@
+import Bluebird from 'bluebird';
+
 import { Component } from '@angular/core';
 import { ApiService, IAuthReponse } from 'src/app/services/api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 type Method = 'login' | 'register';
 
@@ -18,9 +21,10 @@ export class AuthComponent {
 
   public form: FormGroup;
 
-  constructor(private api: ApiService,
-              protected formBuilder: FormBuilder,
-              private userService: UserService
+  constructor(protected formBuilder: FormBuilder,
+              private api: ApiService,
+              private userService: UserService,
+              private router: Router
   ) { }
 
   public getClass(key: string, includeFormControl = true): string[] {
@@ -49,6 +53,10 @@ export class AuthComponent {
       const response = await this.sendRequest(method);
       this.successMessage = 'Success! Redirecting...';
       this.userService.setUser(response.user);
+
+      await Bluebird.delay(1000);
+
+      this.router.navigateByUrl('trips');
 
     } catch (e) {
 

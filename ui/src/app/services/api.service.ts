@@ -57,12 +57,16 @@ export class ApiService {
     return this.post<IAuthReponse>(`${urlRoot}/login`, payload);
   }
 
+  public logout(): Promise<void> {
+    return this.post<void>(`${urlRoot}/logout`);
+  }
+
 
   private get<T>(url: string, withCredentials = true): Promise<T> {
     return this.http.get<T>(url, { withCredentials }).toPromise();
   }
 
-  private post<T>(url: string, data: Payload, withCredentials = true): Promise<T> {
+  private post<T>(url: string, data: Payload = null, withCredentials = true): Promise<T> {
     return this.http.post<T>(url, data, { withCredentials }).toPromise();
   }
 }
