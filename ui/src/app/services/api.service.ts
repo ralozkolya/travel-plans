@@ -3,34 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 
-type Role = 'user' | 'manager' | 'admin';
-type Payload = IRegisterPayload | ILoginPayload;
-export type User = IUser | null;
-
-interface IUser {
-  id: number;
-  name: string;
-  email: string;
-  role: Role;
-}
-
-interface IRegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-  password_confirmation: string;
-}
-
-export interface IAuthReponse {
-  access_token: string;
-  user: IUser;
-}
-
-interface ILoginPayload {
-  email: string;
-  password: string;
-}
-
 const { urlRoot } = environment;
 
 @Injectable({
@@ -38,35 +10,15 @@ const { urlRoot } = environment;
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) {}
+  protected urlRoot = urlRoot;
 
-  // GET requests
+  constructor(protected http: HttpClient) {}
 
-  public whoAmI(): Promise<IUser> {
-    return this.get<IUser>(`${urlRoot}/whoami`);
-  }
-
-
-  // POST requests
-
-  public register(payload: IRegisterPayload): Promise<IAuthReponse> {
-    return this.post<IAuthReponse>(`${urlRoot}/register`, payload);
-  }
-
-  public login(payload: ILoginPayload): Promise<IAuthReponse> {
-    return this.post<IAuthReponse>(`${urlRoot}/login`, payload);
-  }
-
-  public logout(): Promise<void> {
-    return this.post<void>(`${urlRoot}/logout`);
-  }
-
-
-  private get<T>(url: string, withCredentials = true): Promise<T> {
+  protected get<T>(url: string, withCredentials = true): Promise<T> {
     return this.http.get<T>(url, { withCredentials }).toPromise();
   }
 
-  private post<T>(url: string, data: Payload = null, withCredentials = true): Promise<T> {
+  protected post<T, U = null>(url: string, data: U = null, withCredentials = true): Promise<T> {
     return this.http.post<T>(url, data, { withCredentials }).toPromise();
   }
 }

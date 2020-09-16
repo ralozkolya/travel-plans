@@ -1,7 +1,7 @@
 import Bluebird from 'bluebird';
 
 import { Component } from '@angular/core';
-import { ApiService, IAuthReponse } from 'src/app/services/api.service';
+import { UsersApiService, IAuthReponse } from 'src/app/services/users-api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class AuthComponent {
   public form: FormGroup;
 
   constructor(protected formBuilder: FormBuilder,
-              private api: ApiService,
+              private usersApi: UsersApiService,
               private userService: UserService,
               private router: Router
   ) { }
@@ -75,6 +75,6 @@ export class AuthComponent {
   }
 
   protected sendRequest(method: Method): Promise<IAuthReponse> {
-    return this.api[method](this.form.value);
+    return this.usersApi[method](this.form.value);
   }
 }
