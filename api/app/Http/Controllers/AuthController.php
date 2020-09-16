@@ -26,7 +26,7 @@ class AuthController extends Controller
 
         $user->save();
 
-        return response($user, 201);
+        return $this->respondWithToken(Auth::login($user), 201);
     }
 
     public function login(Request $request)
@@ -49,7 +49,7 @@ class AuthController extends Controller
         return response(null, 204);
     }
 
-    private function respondWithToken($token)
+    private function respondWithToken($token, $status = 200)
     {
         $expiresIn = Auth::factory()->getTTL() * 60;
         $tokenName = config('auth.cookie');
@@ -59,6 +59,6 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => $expiresIn,
             'user' => Auth::user()
-        ])->cookie(new Cookie($tokenName, $token, time() + $expiresIn));
+        ], $status)->cookie(new Cookie($tokenName, $token, time() + $expiresIn));
     }
 }
