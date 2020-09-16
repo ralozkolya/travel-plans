@@ -7,8 +7,11 @@ export interface ITrip {
   destination: string;
   start_date: string;
   end_date: string;
+  days_left: number;
   comment: string | null;
 }
+
+type ICreateTripPayload = Omit<ITrip, 'id' | 'user_id'>;
 
 type ListResponse = IPaginatedResponse<ITrip>;
 
@@ -19,5 +22,9 @@ export class TripsApiService extends ApiService {
 
   public list(): Promise<ListResponse> {
     return this.get<ListResponse>(`/trips`);
+  }
+
+  public create(payload: ICreateTripPayload): Promise<ITrip> {
+    return this.post<ITrip, ICreateTripPayload>('/trips', payload);
   }
 }

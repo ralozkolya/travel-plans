@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit('users.login')">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label>
       Email:
@@ -16,6 +16,10 @@
   </div>
   <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
   <div class="form-group">
-    <input [disabled]="loading || !form.valid" type="submit" class="btn btn-block btn-outline-dark" value="Login">
+    <button [disabled]="shouldDisable" class="btn btn-block btn-outline-dark">
+      <app-loading [loading]="loading" [large]="false">
+        Login
+      </app-loading>
+    </button>
   </div>
 </form>

@@ -1,13 +1,11 @@
-import Bluebird from 'bluebird';
-
 import { Component } from '@angular/core';
-import { UsersApiService, IAuthReponse } from 'src/app/services/users-api.service';
+import { UsersApiService } from 'src/app/services/users-api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { TripsApiService } from 'src/app/services/trips-api.service';
 
-type EndPoint = 'users.login' | 'users.register' | 'trips.create';
+export type EndPoint = 'users.login' | 'users.register' | 'trips.create';
 
 @Component({
   selector: 'app-auth',
@@ -22,11 +20,11 @@ export class FormComponent {
   public form: FormGroup;
 
   constructor(protected formBuilder: FormBuilder,
-              private users: UsersApiService,
-              private trips: TripsApiService,
-              private userService: UserService,
-              private router: Router
-  ) { }
+              protected userService: UserService,
+              protected router: Router,
+              protected users: UsersApiService,
+              protected trips: TripsApiService
+  ) {}
 
   public getClass(key: string, includeFormControl = true): string[] {
 
@@ -44,39 +42,36 @@ export class FormComponent {
     return classes;
   }
 
-  public async onSubmit(method: EndPoint): Promise<void> {
+  public async submit<T>(callback: () => Promise<T>): Promise<void> {
 
     this.loading = true;
     this.errors = [];
 
     try {
 
-      const response = await this.sendRequest(method);
-      this.successMessage = 'Success! Redirecting...';
-      this.userService.setUser(response.user);
-
-      await Bluebird.delay(1500);
-
-      this.router.navigateByUrl('trips');
+      await callback();
+      this.successMessage = 'Success!';
 
     } catch (e) {
-
-      this.loading = false;
 
       if (e.error) {
         const errors: string[] = [];
         Object.keys(e.error).forEach(key => {
-          errors.push.apply(errors, e.error[key]);
+          const array = Array.isArray(e.error[key]) ? e.error[key] : [ e.error[key] ];
+          errors.push.apply(errors, array);
         });
         this.errors = errors;
       } else {
         this.errors = [ 'Unexpected error occured' ];
       }
+
+      throw e;
+    } finally {
+      this.loading = false;
     }
   }
 
-  protected sendRequest(endpoint: EndPoint): Promise<IAuthReponse> {
-    const [ api, method ] = endpoint.split('.');
-    return this[api][method](this.form.value);
+  public get shouldDisable(): boolean {
+    return this.loading || !!this.successMessage || !this.form.valid;
   }
 }

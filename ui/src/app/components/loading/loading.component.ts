@@ -10,4 +10,7 @@ export class LoadingComponent {
   @Input()
   public loading = false;
 
+  @Input()
+  public large = true;
+
 }

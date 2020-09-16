@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import Bluebird from 'bluebird';
+
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormComponent } from '../../base/form/form.component';
-import { Validators } from '@angular/forms';
+import { Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-create-trips-form',
@@ -9,11 +11,30 @@ import { Validators } from '@angular/forms';
 })
 export class CreateTripsFormComponent extends FormComponent {
 
-  public form = this.formBuilder.group({
-    destination: [ '', Validators.required ],
-    start_date: [ '', Validators.required ],
-    end_date: [ '', Validators.required ],
-    comment: [ '' ],
-  });
+  @Output()
+  public created = new EventEmitter();
+
+  public form = this.getFormGroup();
+
+  public async onSubmit(): Promise<void> {
+    await this.submit(() => this.trips.create(this.form.value));
+    this.created.emit();
+    this.reset();
+  }
+
+  private getFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      destination: [ '', Validators.required ],
+      start_date: [ '', Validators.required ],
+      end_date: [ '', Validators.required ],
+      comment: [ '' ],
+    });
+  }
+
+  private async reset(): Promise<void> {
+    this.form = this.getFormGroup();
+    await Bluebird.delay(3000);
+    this.successMessage = null;
+  }
 
 }

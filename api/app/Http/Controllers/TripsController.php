@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 
 class TripsController extends Controller
 {
-    private $perPage = 20;
+    private $perPage = 2;
 
     public function index()
     {
@@ -18,11 +18,13 @@ class TripsController extends Controller
         // Need to retrieve Eloquent instance, otherwise linter complains
         $user = User::findOrFail(Auth::user()->id);
 
-        if ($user->isAdmin()) {
-            return Trip::paginate($this->perPage);
+        $collection = Trip::orderBy('start_date');
+
+        if (!$user->isAdmin()) {
+            $collection->where([ 'user_id' => $user->id ]);
         }
 
-        return $user->trips()->paginate($this->perPage);
+        return $collection->paginate($this->perPage);
     }
 
     public function store(Request $request)

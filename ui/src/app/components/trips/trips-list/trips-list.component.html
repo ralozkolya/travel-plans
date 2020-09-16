@@ -1,18 +1,19 @@
-<div class="container mt-5">
-  <div class="row mb-3">
-    <div class="col">
-      <h1>My planned trips:</h1>
+<app-list [data]="trips">
+  <div *ngFor="let trip of trips" class="card mb-3">
+    <div class="card-body">
+      <h4 class="card-title">
+        {{ trip.destination }}
+        <span *ngIf="trip.days_left"
+          class="badge float-right"
+          [class]="trip.days_left > 3 ? 'badge-info' : 'badge-danger'">
+          {{ trip.days_left }} days left
+        </span>
+      </h4>
+      <h5 class="card-subtitle text-muted">{{ trip.start_date | date }} - {{ trip.end_date | date }}</h5>
+      <div *ngIf="trip.comment">
+        <hr>
+        <p class="card-text text-muted">({{ trip.comment }})</p>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col col-lg-6">
-      <app-list [data]="trips">
-        wat
-      </app-list>
-    </div>
-    <div class="col col-lg-6">
-      <h3>Create a new trip plan:</h3>
-      <app-create-trips-form></app-create-trips-form>
-    </div>
-  </div>
-</div>
+</app-list>

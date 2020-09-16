@@ -19,7 +19,7 @@ interface IRegisterPayload {
   password_confirmation: string;
 }
 
-export interface IAuthReponse {
+export interface IAuthResponse {
   access_token: string;
   user: IUser;
 }
@@ -38,12 +38,12 @@ export class UsersApiService extends ApiService {
     return this.get<IUser>(`/whoami`);
   }
 
-  public register(payload: IRegisterPayload): Promise<IAuthReponse> {
-    return this.post<IAuthReponse, IRegisterPayload>(`/register`, payload);
+  public register(payload: IRegisterPayload): Promise<IAuthResponse> {
+    return this.post<IAuthResponse, IRegisterPayload>(`/register`, payload);
   }
 
-  public login(payload: ILoginPayload): Promise<IAuthReponse> {
-    return this.post<IAuthReponse, ILoginPayload>(`/login`, payload);
+  public login(payload: ILoginPayload): Promise<IAuthResponse> {
+    return this.post<IAuthResponse, ILoginPayload>(`/login`, payload);
   }
 
   public logout(): Promise<void> {

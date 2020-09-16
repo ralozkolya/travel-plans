@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormComponent } from '../../base/form/form.component';
+import Bluebird from 'bluebird';
+
+import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
+
+import { FormComponent, EndPoint } from '../../base/form/form.component';
+import { IAuthResponse } from 'src/app/services/users-api.service';
 
 @Component({
   selector: 'app-login-form',
@@ -13,5 +17,16 @@ export class LoginFormComponent extends FormComponent {
     email: [ '', Validators.required ],
     password: [ '', Validators.required ],
   });
+
+  public async onSubmit(): Promise<void> {
+    await this.submit(this.send.bind(this));
+    await Bluebird.delay(1500);
+    this.router.navigateByUrl('trips');
+  }
+
+  private async send(): Promise<void> {
+    const response = await this.users.login(this.form.value);
+    this.userService.setUser(response.user);
+  }
 
 }

@@ -1,5 +1,9 @@
-<div class="text-center mt-5" *ngIf="loading">
-    <div class="spinner-border" role="status">
+<div *ngIf="loading" class="text-center" [class.mt-5]="large">
+    <div
+      class="spinner-border"
+      [class.large]="large"
+      [class.spinner-border-sm]="!large"
+      role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>

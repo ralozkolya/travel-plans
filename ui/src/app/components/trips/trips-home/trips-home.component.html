@@ -1,0 +1,19 @@
+<div class="container mt-5">
+  <div class="row mb-3">
+    <div class="col">
+      <h1>Upcoming trips:</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-lg-8">
+      <hr>
+      <app-trips-list [trips]="futureTrips"></app-trips-list>
+      <h3 class="my-4">Past trips:</h3>
+      <app-trips-list [trips]="pastTrips"></app-trips-list>
+    </div>
+    <div class="col col-lg-4">
+      <h3>Create a new trip plan:</h3>
+      <app-create-trips-form (created)="retrieveTrips()"></app-create-trips-form>
+    </div>
+  </div>
+</div>

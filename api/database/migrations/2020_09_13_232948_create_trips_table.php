@@ -18,8 +18,8 @@ class CreateTripsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('destination', 256);
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->string('comment', 1024)->nullable();
             $table->timestamps();
         });

@@ -1,23 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { TripsApiService, ITrip } from 'src/app/services/trips-api.service';
+import { Component, Input } from '@angular/core';
+import { ITrip } from 'src/app/services/trips-api.service';
 
 @Component({
-  selector: 'app-trips',
+  selector: 'app-trips-list',
   templateUrl: './trips-list.component.html',
   styleUrls: ['./trips-list.component.scss']
 })
-export class TripsListComponent implements OnInit {
+export class TripsListComponent {
 
-  public trips: ITrip[] = [];
-
-  constructor(private tripsApi: TripsApiService) { }
-
-  public ngOnInit(): void {
-    this.retrieveTrips();
-  }
-
-  public async retrieveTrips(): Promise<void> {
-    this.trips = (await this.tripsApi.list()).data;
-  }
+  @Input()
+  public trips: ITrip[];
 
 }

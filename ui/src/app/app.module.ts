@@ -8,7 +8,7 @@ import { AppComponent } from './components/app/app.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HomeComponent } from './components/home/home.component';
-import { TripsListComponent } from './components/trips/trips-list/trips-list.component';
+import { TripsHomeComponent } from './components/trips/trips-home/trips-home.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -18,6 +18,7 @@ import { ListComponent } from './components/list/list.component';
 import { CreateTripsFormComponent } from './components/trips/create-trips-form/create-trips-form.component';
 import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
+import { TripsListComponent } from './components/trips/trips-list/trips-list.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { RegisterFormComponent } from './components/auth/register-form/register-
     LoadingComponent,
     NavigationComponent,
     HomeComponent,
-    TripsListComponent,
+    TripsHomeComponent,
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
@@ -34,7 +35,8 @@ import { RegisterFormComponent } from './components/auth/register-form/register-
     ListComponent,
     CreateTripsFormComponent,
     LoginFormComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    TripsListComponent
   ],
   imports: [
     BrowserModule,

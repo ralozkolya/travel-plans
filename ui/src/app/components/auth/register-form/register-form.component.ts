@@ -1,7 +1,11 @@
+import Bluebird from 'bluebird';
+
 import { Component } from '@angular/core';
-import { FormComponent } from '../../base/form/form.component';
 import { Validators } from '@angular/forms';
-import { ConfirmedValidator } from 'src/app/utils/confirmed.validator';
+
+import { FormComponent, EndPoint } from '../../base/form/form.component';
+import { ConfirmedValidator } from '../../../utils/confirmed.validator';
+import { IAuthResponse } from '../../../services/users-api.service';
 
 @Component({
   selector: 'app-register-form',
@@ -18,4 +22,15 @@ export class RegisterFormComponent extends FormComponent {
   }, {
     validator: ConfirmedValidator('password', 'password_confirmation')
   });
+
+  public async onSubmit(): Promise<void> {
+    await this.submit(this.send.bind(this));
+    await Bluebird.delay(1500);
+    this.router.navigateByUrl('trips');
+  }
+
+  private async send(): Promise<void> {
+    const response = await this.users.register(this.form.value);
+    this.userService.setUser(response.user);
+  }
 }
