@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
+import { FormComponent } from '../../base/form/form.component';
 import { Validators } from '@angular/forms';
-
 import { ConfirmedValidator } from 'src/app/utils/confirmed.validator';
-import { AuthComponent } from '../auth/auth.component';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-register-form',
+  templateUrl: './register-form.component.html',
+  styleUrls: ['./register-form.component.scss']
 })
-export class RegisterComponent extends AuthComponent {
+export class RegisterFormComponent extends FormComponent {
 
   public form = this.formBuilder.group({
     name: ['', [Validators.required]],

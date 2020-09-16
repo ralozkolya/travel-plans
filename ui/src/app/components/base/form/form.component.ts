@@ -5,15 +5,15 @@ import { UsersApiService, IAuthReponse } from 'src/app/services/users-api.servic
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { TripsApiService } from 'src/app/services/trips-api.service';
 
-type Method = 'login' | 'register';
+type EndPoint = 'users.login' | 'users.register' | 'trips.create';
 
 @Component({
   selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  template: ''
 })
-export class AuthComponent {
+export class FormComponent {
 
   public loading = false;
   public successMessage: string;
@@ -22,7 +22,8 @@ export class AuthComponent {
   public form: FormGroup;
 
   constructor(protected formBuilder: FormBuilder,
-              private usersApi: UsersApiService,
+              private users: UsersApiService,
+              private trips: TripsApiService,
               private userService: UserService,
               private router: Router
   ) { }
@@ -43,7 +44,7 @@ export class AuthComponent {
     return classes;
   }
 
-  public async onSubmit(method: Method): Promise<void> {
+  public async onSubmit(method: EndPoint): Promise<void> {
 
     this.loading = true;
     this.errors = [];
@@ -54,7 +55,7 @@ export class AuthComponent {
       this.successMessage = 'Success! Redirecting...';
       this.userService.setUser(response.user);
 
-      await Bluebird.delay(1000);
+      await Bluebird.delay(1500);
 
       this.router.navigateByUrl('trips');
 
@@ -74,7 +75,8 @@ export class AuthComponent {
     }
   }
 
-  protected sendRequest(method: Method): Promise<IAuthReponse> {
-    return this.usersApi[method](this.form.value);
+  protected sendRequest(endpoint: EndPoint): Promise<IAuthReponse> {
+    const [ api, method ] = endpoint.split('.');
+    return this[api][method](this.form.value);
   }
 }

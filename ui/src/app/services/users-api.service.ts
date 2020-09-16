@@ -34,24 +34,19 @@ interface ILoginPayload {
 })
 export class UsersApiService extends ApiService {
 
-  // GET requests
-
   public whoAmI(): Promise<IUser> {
-    return this.get<IUser>(`${this.urlRoot}/whoami`);
+    return this.get<IUser>(`/whoami`);
   }
 
-
-  // POST requests
-
   public register(payload: IRegisterPayload): Promise<IAuthReponse> {
-    return this.post<IAuthReponse, IRegisterPayload>(`${this.urlRoot}/register`, payload);
+    return this.post<IAuthReponse, IRegisterPayload>(`/register`, payload);
   }
 
   public login(payload: ILoginPayload): Promise<IAuthReponse> {
-    return this.post<IAuthReponse, ILoginPayload>(`${this.urlRoot}/login`, payload);
+    return this.post<IAuthReponse, ILoginPayload>(`/login`, payload);
   }
 
   public logout(): Promise<void> {
-    return this.post<void>(`${this.urlRoot}/logout`);
+    return this.post<void>(`/logout`);
   }
 }

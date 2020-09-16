@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit('users.register')">
+  <div class="form-group">
+    <label>
+      Name:
+      <input type="text" [class]="getClass('name')" formControlName="name" required appAutoFocus>
+    </label>
+  </div>
+  <div class="form-group">
+    <label>
+      Email:
+      <input type="email" [class]="getClass('email')" formControlName="email" required>
+    </label>
+  </div>
+  <div class="form-group">
+    <label>
+      Password:
+      <input type="password" [class]="getClass('password')" formControlName="password" required>
+    </label>
+  </div>
+  <div class="form-group">
+    <label>
+      Password (confirmation):
+      <input type="password" [class]="getClass('password_confirmation')" formControlName="password_confirmation" required>
+    </label>
+  </div>
+  <div *ngIf="errors.length" class="alert alert-danger">
+    <div *ngFor="let error of errors">{{ error }}</div>
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div class="form-group">
+    <input [disabled]="loading || !form.valid" type="submit" class="btn btn-block btn-dark" value="Register">
+  </div>
+</form>

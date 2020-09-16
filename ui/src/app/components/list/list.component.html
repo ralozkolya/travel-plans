@@ -1,0 +1,4 @@
+<h4 class="text-secondary" *ngIf="!data || !data.length; else elseBlock">Nothing here (yet)</h4>
+<ng-template #elseBlock>
+  <ng-content></ng-content>
+</ng-template>

@@ -8,12 +8,16 @@ import { AppComponent } from './components/app/app.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HomeComponent } from './components/home/home.component';
-import { TripsComponent } from './components/trips/trips.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { TripsListComponent } from './components/trips/trips-list/trips-list.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
-import { AuthComponent } from './components/auth/auth.component';
+import { FormComponent } from './components/base/form/form.component';
+import { ListComponent } from './components/list/list.component';
+import { CreateTripsFormComponent } from './components/trips/create-trips-form/create-trips-form.component';
+import { LoginFormComponent } from './components/auth/login-form/login-form.component';
+import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +25,16 @@ import { AuthComponent } from './components/auth/auth.component';
     LoadingComponent,
     NavigationComponent,
     HomeComponent,
-    TripsComponent,
+    TripsListComponent,
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
     AutoFocusDirective,
-    AuthComponent
+    FormComponent,
+    ListComponent,
+    CreateTripsFormComponent,
+    LoginFormComponent,
+    RegisterFormComponent
   ],
   imports: [
     BrowserModule,
