@@ -23,7 +23,7 @@ class UserWriteTest extends TestCase
         $this->call('POST', "{$this->path}/register", array_merge($user, [
             'password' => 'password',
             'password_confirmation' => 'password',
-        ]))->assertOk();
+        ]))->assertCreated();
     }
 
     public function testUpdateUser()
