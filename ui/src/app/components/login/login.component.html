@@ -1,1 +1,31 @@
-<p>login works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-4 offset-lg-1">
+      <form [formGroup]="form" (ngSubmit)="onSubmit('login')">
+        <div class="form-group">
+          <label>
+            Email:
+            <input type="email" class="form-control" formControlName="email" required>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            Password:
+            <input type="password" class="form-control" formControlName="password" required>
+          </label>
+        </div>
+        <div *ngIf="errors.length" class="alert alert-danger">
+          <div *ngFor="let error of errors">{{ error }}</div>
+        </div>
+        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+        <div class="form-group">
+          <input [disabled]="loading || !form.valid" type="submit" class="btn btn-block btn-outline-dark" value="Login">
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-4 offset-lg-1 mb-5">
+      <h3 class="my-5">Don't have an account?</h3>
+      <a routerLink="/register" class="btn btn-block btn-dark">Over here</a>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
+import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AutoFocusDirective } from './directives/auto-focus.directive';
     LoginComponent,
     RegisterComponent,
     PageNotFoundComponent,
-    AutoFocusDirective
+    AutoFocusDirective,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

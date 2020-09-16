@@ -4,9 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 type Role = 'user' | 'manager' | 'admin';
-type Payload = IRegisterPayload;
+type Payload = IRegisterPayload | ILoginPayload;
+export type User = IUser | null;
 
-export interface IUser {
+interface IUser {
   id: number;
   name: string;
   email: string;
@@ -20,9 +21,14 @@ interface IRegisterPayload {
   password_confirmation: string;
 }
 
-interface IRegisterResponse {
+export interface IAuthReponse {
   access_token: string;
   user: IUser;
+}
+
+interface ILoginPayload {
+  email: string;
+  password: string;
 }
 
 const { urlRoot } = environment;
@@ -43,8 +49,12 @@ export class ApiService {
 
   // POST requests
 
-  public register(payload: IRegisterPayload): Promise<IRegisterResponse> {
-    return this.post<IRegisterResponse>(`${urlRoot}/register`, payload);
+  public register(payload: IRegisterPayload): Promise<IAuthReponse> {
+    return this.post<IAuthReponse>(`${urlRoot}/register`, payload);
+  }
+
+  public login(payload: ILoginPayload): Promise<IAuthReponse> {
+    return this.post<IAuthReponse>(`${urlRoot}/login`, payload);
   }
 
 

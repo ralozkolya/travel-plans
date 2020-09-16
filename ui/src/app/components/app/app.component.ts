@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IUser, ApiService } from 'src/app/services/api.service';
+import { User, ApiService } from 'src/app/services/api.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private api: ApiService, private userService: UserService) {}
 
   public loading = true;
-  public user: IUser | null = null;
+  public user: User = null;
 
   async ngOnInit(): Promise<void> {
     try {

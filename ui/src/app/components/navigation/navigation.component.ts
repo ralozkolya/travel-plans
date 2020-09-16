@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { IUser } from 'src/app/services/api.service';
+import { User } from 'src/app/services/api.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NavigationComponent implements OnInit {
 
-  public user: IUser | null = null;
+  public user: User = null;
 
   constructor(private userService: UserService) {}
 
