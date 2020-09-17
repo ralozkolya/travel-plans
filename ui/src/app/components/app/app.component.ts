@@ -16,13 +16,14 @@ export class AppComponent implements OnInit {
   public user: User = null;
 
   async ngOnInit(): Promise<void> {
+
+    this.userService.getObservable().subscribe(user => this.user = user);
+
     try {
       this.user = await this.usersApi.whoAmI();
       this.userService.setUser(this.user);
     } finally {
       this.loading = false;
     }
-
-    this.userService.subscribe(user => this.user = user);
   }
 }

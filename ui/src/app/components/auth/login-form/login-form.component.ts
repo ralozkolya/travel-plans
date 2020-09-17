@@ -21,7 +21,7 @@ export class LoginFormComponent extends FormComponent {
   public async onSubmit(): Promise<void> {
     await this.submit(this.send.bind(this));
     await Bluebird.delay(1500);
-    this.router.navigateByUrl('trips');
+    this.router.navigateByUrl('/trips');
   }
 
   private async send(): Promise<void> {

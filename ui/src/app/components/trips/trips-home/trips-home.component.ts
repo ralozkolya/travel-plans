@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TripsApiService, ITrip, TripListResponse } from 'src/app/services/trips-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-trips',
@@ -27,9 +26,8 @@ export class TripsHomeComponent implements OnInit {
   public ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.page = params.page || 1;
-      this.retrieveTrips();
+      this.tripService.getObservable().subscribe(() => this.retrieveTrips());
     });
-    this.tripService.subscribe(() => this.retrieveTrips());
   }
 
   public async retrieveTrips(): Promise<void> {

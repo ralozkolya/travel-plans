@@ -13,8 +13,10 @@ export function DateRangeValidator(controlName: string, matchingControlName: str
 
         if (control.value >= matchingControl.value) {
             matchingControl.setErrors({ dateRangeValidator: true });
+            control.setErrors({ dateRangeValidator: true });
         } else {
             matchingControl.setErrors(null);
+            control.setErrors(null);
         }
     }
 }

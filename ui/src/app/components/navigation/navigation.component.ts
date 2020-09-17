@@ -20,7 +20,7 @@ export class NavigationComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.userService.subscribe(user => this.user = user);
+    this.userService.getObservable().subscribe(user => this.user = user);
   }
 
   public logout(): boolean {

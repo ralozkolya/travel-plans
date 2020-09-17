@@ -6,12 +6,14 @@ import { TripsHomeComponent } from './components/trips/trips-home/trips-home.com
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AuthGuard } from './guards/auth.guard';
+import { GuestGuard } from './guards/guest.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'trips', component: TripsHomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'trips', component: TripsHomeComponent, canActivate: [ AuthGuard ] },
+  { path: 'login', component: LoginComponent, canActivate: [ GuestGuard ] },
+  { path: 'register', component: RegisterComponent, canActivate: [ GuestGuard ] },
   { path: '**', component: PageNotFoundComponent },
 ];
 
