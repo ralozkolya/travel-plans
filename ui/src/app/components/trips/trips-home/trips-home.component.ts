@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TripsApiService, ITrip } from 'src/app/services/trips-api.service';
+import { TripsApiService, ITrip, TripListResponse } from 'src/app/services/trips-api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-trips',
@@ -8,19 +9,32 @@ import { TripsApiService, ITrip } from 'src/app/services/trips-api.service';
 })
 export class TripsHomeComponent implements OnInit {
 
+  public loading = false;
+
+  public response: TripListResponse;
   public futureTrips: ITrip[] = [];
   public pastTrips: ITrip[] = [];
 
-  constructor(private tripsApi: TripsApiService) { }
+  constructor(
+    private tripsApi: TripsApiService,
+    private route: ActivatedRoute
+  ) {}
 
   public ngOnInit(): void {
-    this.retrieveTrips();
+    this.route.queryParams.subscribe(params => {
+      this.retrieveTrips(params.page || 1);
+    });
   }
 
-  public async retrieveTrips(): Promise<void> {
-    const trips = (await this.tripsApi.list()).data;
-    this.futureTrips = trips.filter(trip => trip.days_left);
-    this.pastTrips = trips.filter(trip => !trip.days_left);
+  public async retrieveTrips(page = 1): Promise<void> {
+    this.loading = true;
+    try {
+      this.response = (await this.tripsApi.list(page));
+      this.futureTrips = this.response.data.filter(trip => trip.days_left);
+      this.pastTrips = this.response.data.filter(trip => !trip.days_left);
+    } finally {
+      this.loading = false;
+    }
   }
 
 }

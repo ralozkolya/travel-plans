@@ -19,6 +19,7 @@ import { CreateTripsFormComponent } from './components/trips/create-trips-form/c
 import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 import { TripsListComponent } from './components/trips/trips-list/trips-list.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TripsListComponent } from './components/trips/trips-list/trips-list.com
     CreateTripsFormComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    TripsListComponent
+    TripsListComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

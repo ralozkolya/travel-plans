@@ -1,0 +1,19 @@
+<nav *ngIf="paginationNeeded" aria-label="Pagination">
+  <ul class="pagination justify-content-center">
+    <li *ngIf="first" class="page-item">
+      <a [routerLink]="path" class="page-link text-reset">&laquo;</a>
+    </li>
+    <li *ngIf="prev" class="page-item">
+      <a [routerLink]="path" [queryParams]="{ page: response.current_page - 1 }" class="page-link text-reset">&lsaquo;</a>
+    </li>
+    <li *ngFor="let page of pages" class="page-item" [class.active]="page === response.current_page">
+      <a [routerLink]="path" [queryParams]="{ page: page }" class="page-link text-reset">{{ page }}</a>
+    </li>
+    <li *ngIf="next" class="page-item">
+      <a [routerLink]="path" [queryParams]="{ page: response.current_page + 1 }" class="page-link text-reset">&rsaquo;</a>
+    </li>
+    <li *ngIf="last" class="page-item">
+      <a [routerLink]="path" [queryParams]="{ page: response.last_page }" class="page-link text-reset">&raquo;</a>
+    </li>
+  </ul>
+</nav>

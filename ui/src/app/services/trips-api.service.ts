@@ -13,15 +13,15 @@ export interface ITrip {
 
 type ICreateTripPayload = Omit<ITrip, 'id' | 'user_id'>;
 
-type ListResponse = IPaginatedResponse<ITrip>;
+export type TripListResponse = IPaginatedResponse<ITrip>;
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripsApiService extends ApiService {
 
-  public list(): Promise<ListResponse> {
-    return this.get<ListResponse>(`/trips`);
+  public list(page = 1): Promise<TripListResponse> {
+    return this.get<TripListResponse>(`/trips`, { page: String(page) });
   }
 
   public create(payload: ICreateTripPayload): Promise<ITrip> {

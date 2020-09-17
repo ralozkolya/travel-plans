@@ -12,7 +12,7 @@ import { Validators, FormGroup } from '@angular/forms';
 export class CreateTripsFormComponent extends FormComponent {
 
   @Output()
-  public created = new EventEmitter();
+  public created = new EventEmitter<void>();
 
   public form = this.getFormGroup();
 

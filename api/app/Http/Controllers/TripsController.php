@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 
 class TripsController extends Controller
 {
-    private $perPage = 2;
+    private $perPage = 4;
 
     public function index()
     {

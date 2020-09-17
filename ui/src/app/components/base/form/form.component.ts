@@ -19,11 +19,12 @@ export class FormComponent {
 
   public form: FormGroup;
 
-  constructor(protected formBuilder: FormBuilder,
-              protected userService: UserService,
-              protected router: Router,
-              protected users: UsersApiService,
-              protected trips: TripsApiService
+  constructor(
+    protected formBuilder: FormBuilder,
+    protected userService: UserService,
+    protected router: Router,
+    protected users: UsersApiService,
+    protected trips: TripsApiService
   ) {}
 
   public getClass(key: string, includeFormControl = true): string[] {
