@@ -45,7 +45,7 @@ export class PaginationComponent {
     const page = this.response?.current_page;
     const pages = [ page ];
 
-    for (let i = 1; i < 3; i++) {
+    for (let i = 1; i <= this.padding; i++) {
       if (page - i > 0)  {
         pages.unshift(page - i);
       }
