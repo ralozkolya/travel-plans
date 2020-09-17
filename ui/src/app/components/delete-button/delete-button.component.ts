@@ -1,9 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { expandAnimation, showHideAnimation } from 'src/app/animations/expand.animation';
 
 @Component({
   selector: 'app-delete-button',
   templateUrl: './delete-button.component.html',
-  styleUrls: ['./delete-button.component.scss']
+  styleUrls: ['./delete-button.component.scss'],
+  animations: [ expandAnimation, showHideAnimation ]
 })
 export class DeleteButtonComponent {
 
