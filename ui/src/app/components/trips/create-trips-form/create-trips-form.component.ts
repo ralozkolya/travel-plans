@@ -3,6 +3,7 @@ import Bluebird from 'bluebird';
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormComponent } from '../../base/form/form.component';
 import { Validators, FormGroup } from '@angular/forms';
+import { DateRangeValidator } from 'src/app/utils/date-range.validator';
 
 @Component({
   selector: 'app-create-trips-form',
@@ -28,6 +29,8 @@ export class CreateTripsFormComponent extends FormComponent {
       start_date: [ '', Validators.required ],
       end_date: [ '', Validators.required ],
       comment: [ '' ],
+    }, {
+      validator: DateRangeValidator('start_date', 'end_date')
     });
   }
 

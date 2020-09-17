@@ -8,6 +8,7 @@ export interface ITrip {
   start_date: string;
   end_date: string;
   days_left: number;
+  ongoing: boolean;
   comment: string | null;
 }
 

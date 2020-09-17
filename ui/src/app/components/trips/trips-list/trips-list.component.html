@@ -3,10 +3,10 @@
     <div class="card-body">
       <h4 class="card-title">
         {{ trip.destination }}
-        <span *ngIf="trip.days_left"
+        <span *ngIf="trip.ongoing || trip.days_left"
           class="badge float-right"
-          [class]="trip.days_left > 3 ? 'badge-info' : 'badge-danger'">
-          {{ trip.days_left }} days left
+          [class]="getBadgeClass(trip)">
+          {{ getBadgeLabel(trip) }}
         </span>
       </h4>
       <h5 class="card-subtitle text-muted">{{ trip.start_date | date }} - {{ trip.end_date | date }}</h5>

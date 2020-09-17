@@ -30,8 +30,8 @@ export class TripsHomeComponent implements OnInit {
     this.loading = true;
     try {
       this.response = (await this.tripsApi.list(page));
-      this.futureTrips = this.response.data.filter(trip => trip.days_left);
-      this.pastTrips = this.response.data.filter(trip => !trip.days_left);
+      this.futureTrips = this.response.data.filter(trip => trip.ongoing);
+      this.pastTrips = this.response.data.filter(trip => !trip.ongoing);
     } finally {
       this.loading = false;
     }

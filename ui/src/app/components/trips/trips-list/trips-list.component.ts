@@ -11,4 +11,16 @@ export class TripsListComponent {
   @Input()
   public trips: ITrip[];
 
+  public getBadgeClass(trip: ITrip): string {
+    console.log(trip);
+    return trip.days_left > 3
+      ? 'badge-info'
+      : trip.ongoing
+        ? 'badge-success' : 'badge-danger';
+  }
+
+  public getBadgeLabel(trip: ITrip): string {
+    return trip.ongoing ? 'Ongoing' : `${trip.days_left} days left`;
+  }
+
 }
