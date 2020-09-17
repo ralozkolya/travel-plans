@@ -10,18 +10,19 @@ export class DeleteButtonComponent {
   @Output()
   public action = new EventEmitter<void>();
 
-  public confirmed = false;
+  public asked = false;
 
   public async onClick(confirmed = false): Promise<void> {
 
-    if (this.confirmed) {
-      this.confirmed = false;
-    } else {
-      this.confirmed = true;
-    }
+    if (this.asked) {
+      this.asked = false;
 
-    if (confirmed) {
-      this.action.emit();
+      if (confirmed) {
+        this.action.emit();
+      }
+
+    } else {
+      this.asked = true;
     }
 
   }

@@ -1,4 +1,4 @@
-<button *ngIf="!confirmed; else elseBlock" class="btn btn-sm btn-outline-danger" (click)="onClick()">
+<button *ngIf="!asked; else elseBlock" class="btn btn-sm btn-outline-danger" (click)="onClick()">
   <span aria-hidden="true">&times;</span>
 </button>
 <ng-template #elseBlock>
