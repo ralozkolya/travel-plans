@@ -27,6 +27,11 @@ class TripsController extends Controller
         return $collection->paginate($this->perPage);
     }
 
+    public function show($id)
+    {
+        return Trip::findOrFail($id);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [

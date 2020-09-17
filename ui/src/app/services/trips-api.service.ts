@@ -12,7 +12,7 @@ export interface ITrip {
   comment: string | null;
 }
 
-type ICreateTripPayload = Omit<ITrip, 'id' | 'user_id'>;
+type ITripPayload = Omit<ITrip, 'id' | 'user_id' | 'days_left' | 'ongoing'>;
 
 export type TripListResponse = IPaginatedResponse<ITrip>;
 
@@ -25,8 +25,16 @@ export class TripsApiService extends ApiService {
     return this.get<TripListResponse>(`/trips`, { page: String(page) });
   }
 
-  public create(payload: ICreateTripPayload): Promise<ITrip> {
-    return this.post<ITrip, ICreateTripPayload>('/trips', payload);
+  public getTrip(id: number): Promise<ITrip> {
+    return this.get<ITrip>(`/trips/${id}`);
+  }
+
+  public create(payload: ITripPayload): Promise<ITrip> {
+    return this.post<ITrip, ITripPayload>('/trips', payload);
+  }
+
+  public update(id: number, payload: ITripPayload): Promise<ITrip> {
+    return this.patch<ITrip, ITripPayload>(`/trips/${id}`, payload);
   }
 
   public remove(id: number): Promise<void> {

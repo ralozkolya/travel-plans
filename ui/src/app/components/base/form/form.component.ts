@@ -2,15 +2,17 @@ import { Component } from '@angular/core';
 import { UsersApiService } from 'src/app/services/users-api.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TripsApiService } from 'src/app/services/trips-api.service';
 import { TripService } from 'src/app/services/trip.service';
+import { expandYAnimation } from 'src/app/animations/expand.animation';
 
 export type EndPoint = 'users.login' | 'users.register' | 'trips.create';
 
 @Component({
   selector: 'app-auth',
-  template: ''
+  template: '',
+  animations: [ expandYAnimation ]
 })
 export class FormComponent {
 
@@ -26,7 +28,8 @@ export class FormComponent {
     protected router: Router,
     protected users: UsersApiService,
     protected trips: TripsApiService,
-    protected tripService: TripService
+    protected tripService: TripService,
+    protected route: ActivatedRoute
   ) {}
 
   public getClass(key: string, includeFormControl = true): string[] {

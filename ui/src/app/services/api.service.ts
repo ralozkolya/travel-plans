@@ -44,6 +44,12 @@ export class ApiService {
     return this.handleResponse<T>(responsePromise);
   }
 
+  protected patch<T, U = null>(url: string, data: U = null, withCredentials = true): Promise<T> {
+    url = this.urlRoot + url;
+    const responsePromise = this.http.patch<T>(url, data, { withCredentials }).toPromise();
+    return this.handleResponse<T>(responsePromise);
+  }
+
   protected delete<T>(url: string, withCredentials = true): Promise<T> {
     url = this.urlRoot + url;
     const responsePromise = this.http.delete<T>(url, { withCredentials }).toPromise();

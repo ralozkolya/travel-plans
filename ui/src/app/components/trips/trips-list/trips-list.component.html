@@ -15,7 +15,7 @@
         <p class="card-text text-muted">({{ trip.comment }})</p>
       </div>
       <div class="text-right">
-        <app-delete-button (action)="deleteTrip(trip.id)"></app-delete-button>
+        <app-delete-button (delete)="deleteTrip(trip.id)" (edit)="editTrip(trip.id)"></app-delete-button>
       </div>
     </div>
   </div>

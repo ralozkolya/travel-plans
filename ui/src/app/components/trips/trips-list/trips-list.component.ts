@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ITrip, TripsApiService } from 'src/app/services/trips-api.service';
 import { TripService } from 'src/app/services/trip.service';
+import { Router } from '@angular/router';
 
 type Size = 'normal' | 'large' | 'small' | 'extra-small';
 
@@ -19,7 +20,8 @@ export class TripsListComponent {
 
   constructor(
     private tripsApi: TripsApiService,
-    private tripService: TripService
+    private tripService: TripService,
+    private router: Router
   ) {}
 
   public getBadgeClass(trip: ITrip): string {
@@ -54,6 +56,10 @@ export class TripsListComponent {
   public async deleteTrip(id: number): Promise<void> {
     await this.tripsApi.remove(id);
     this.tripService.update();
+  }
+
+  public async editTrip(id: number): Promise<void> {
+    this.router.navigate([ '/trips', id ]);
   }
 
 }

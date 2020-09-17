@@ -22,6 +22,7 @@ import { RegisterFormComponent } from './components/auth/register-form/register-
 import { TripsListComponent } from './components/trips/trips-list/trips-list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { DeleteButtonComponent } from './components/delete-button/delete-button.component';
+import { EditTripComponent } from './components/trips/edit-trip/edit-trip.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { DeleteButtonComponent } from './components/delete-button/delete-button.
     RegisterFormComponent,
     TripsListComponent,
     PaginationComponent,
-    DeleteButtonComponent
+    DeleteButtonComponent,
+    EditTripComponent
   ],
   imports: [
     BrowserModule,

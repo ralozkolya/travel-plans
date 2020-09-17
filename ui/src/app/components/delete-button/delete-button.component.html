@@ -1,9 +1,14 @@
-<button *ngIf="!asked; else elseBlock" class="btn btn-sm btn-outline-danger" (click)="onClick()" [@showHideAnimation]="asked">
-  <span aria-hidden="true">&times;</span>
-</button>
+<div *ngIf="!asked; else elseBlock" @showHideAnimation>
+  <button class="btn btn-sm btn-info mr-2" (click)="onEdit()">
+    Edit
+  </button>
+  <button class="btn btn-sm btn-outline-danger" (click)="onDelete()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <ng-template #elseBlock>
-  <div class="buttons" @expandAnimation>
-    <button class="btn btn-sm btn-danger mr-3" (click)="onClick(true)">Confirm</button>
-    <button class="btn btn-sm btn-light" (click)="onClick()">Cancel</button>
+  <div class="buttons" @expandXAnimation>
+    <button class="btn btn-sm btn-danger mr-2" (click)="onDelete(true)">Confirm</button>
+    <button class="btn btn-sm btn-light" (click)="onDelete()">Cancel</button>
   </div>
 </ng-template>

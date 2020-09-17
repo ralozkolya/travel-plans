@@ -23,10 +23,12 @@
       <input type="text" [class]="getClass('comment')" formControlName="comment">
     </label>
   </div>
-  <div *ngIf="errors.length" class="alert alert-danger">
+  <div *ngIf="errors.length" class="alert alert-danger" @expandYAnimation>
     <div *ngFor="let error of errors">{{ error }}</div>
   </div>
-  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="successMessage" class="alert alert-success" @expandYAnimation>
+    {{ successMessage }}
+  </div>
   <div class="form-group">
     <button [disabled]="shouldDisable" class="btn btn-block btn-dark">
       <app-loading [loading]="loading" [large]="false">

@@ -30,6 +30,7 @@ $router->group([ 'prefix' => 'api/v1' ], function () use ($router) {
         $router->delete('users/{id}', 'UsersController@destroy');
 
         $router->get('trips', 'TripsController@index');
+        $router->get('trips/{id}', 'TripsController@show');
         $router->post('trips', 'TripsController@store');
         $router->patch('trips/{id}', 'TripsController@update');
         $router->delete('trips/{id}', 'TripsController@destroy');

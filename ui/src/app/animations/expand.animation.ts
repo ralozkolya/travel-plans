@@ -7,7 +7,7 @@ export const showHideAnimation = trigger('showHideAnimation', [
   ])
 ]);
 
-export const expandAnimation = trigger('expandAnimation', [
+export const expandXAnimation = trigger('expandXAnimation', [
   transition(':enter', [
     style({ transform: 'scaleX(30%)' }),
     animate('100ms', style({
@@ -19,5 +19,20 @@ export const expandAnimation = trigger('expandAnimation', [
     animate('100ms', style({
       transform: 'scaleX(30%)'
     }))
+  ])
+]);
+
+export const expandYAnimation = trigger('expandYAnimation', [
+  transition(':enter', [
+    style({ transform: 'scaleY(0)' }),
+    animate('100ms', style({
+      transform: 'scaleY(100%)'
+    }))
   ]),
+  transition(':leave', [
+    style({ transform: 'scaleY(100%)' }),
+    animate('100ms', style({
+      transform: 'scaleY(0)'
+    }))
+  ])
 ]);
