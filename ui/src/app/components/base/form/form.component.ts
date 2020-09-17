@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { TripsApiService } from 'src/app/services/trips-api.service';
+import { TripService } from 'src/app/services/trip.service';
 
 export type EndPoint = 'users.login' | 'users.register' | 'trips.create';
 
@@ -24,7 +25,8 @@ export class FormComponent {
     protected userService: UserService,
     protected router: Router,
     protected users: UsersApiService,
-    protected trips: TripsApiService
+    protected trips: TripsApiService,
+    protected tripService: TripService
   ) {}
 
   public getClass(key: string, includeFormControl = true): string[] {

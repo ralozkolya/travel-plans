@@ -1,5 +1,5 @@
 <app-list [data]="trips">
-  <div *ngFor="let trip of trips" class="card mb-3">
+  <div *ngFor="let trip of trips" class="card mb-3" [style.fontSize]="em">
     <div class="card-body">
       <h4 class="card-title">
         {{ trip.destination }}
@@ -13,6 +13,9 @@
       <div *ngIf="trip.comment">
         <hr>
         <p class="card-text text-muted">({{ trip.comment }})</p>
+      </div>
+      <div class="text-right">
+        <app-delete-button (action)="deleteTrip(trip.id)"></app-delete-button>
       </div>
     </div>
   </div>

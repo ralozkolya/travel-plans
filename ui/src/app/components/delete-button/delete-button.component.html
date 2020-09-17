@@ -1,0 +1,7 @@
+<button *ngIf="!confirmed; else elseBlock" class="btn btn-sm btn-outline-danger" (click)="onClick()">
+  <span aria-hidden="true">&times;</span>
+</button>
+<ng-template #elseBlock>
+  <button class="btn btn-sm btn-light mr-3" (click)="onClick()">Cancel</button>
+  <button class="btn btn-sm btn-danger" (click)="onClick(true)">Confirm</button>
+</ng-template>

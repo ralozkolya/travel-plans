@@ -20,6 +20,7 @@ import { LoginFormComponent } from './components/auth/login-form/login-form.comp
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 import { TripsListComponent } from './components/trips/trips-list/trips-list.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { DeleteButtonComponent } from './components/delete-button/delete-button.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     LoginFormComponent,
     RegisterFormComponent,
     TripsListComponent,
-    PaginationComponent
+    PaginationComponent,
+    DeleteButtonComponent
   ],
   imports: [
     BrowserModule,

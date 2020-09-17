@@ -36,4 +36,9 @@ export class ApiService {
     url = this.urlRoot + url;
     return this.http.post<T>(url, data, { withCredentials }).toPromise();
   }
+
+  protected delete<T>(url: string, withCredentials = true): Promise<T> {
+    url = this.urlRoot + url;
+    return this.http.delete<T>(url, { withCredentials }).toPromise();
+  }
 }

@@ -11,14 +11,14 @@
         <app-trips-list [trips]="futureTrips"></app-trips-list>
         <div *ngIf="pastTrips.length">
           <h3 class="my-4">Past trips:</h3>
-          <app-trips-list [trips]="pastTrips"></app-trips-list>
+          <app-trips-list [trips]="pastTrips" [size]="'small'"></app-trips-list>
         </div>
         <app-pagination [response]="response"></app-pagination>
       </app-loading>
     </div>
     <div class="col col-lg-4">
       <h3>Create a new trip plan:</h3>
-      <app-create-trips-form (created)="retrieveTrips()"></app-create-trips-form>
+      <app-create-trips-form></app-create-trips-form>
     </div>
   </div>
 </div>

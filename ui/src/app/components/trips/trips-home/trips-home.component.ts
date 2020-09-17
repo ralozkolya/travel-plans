@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TripsApiService, ITrip, TripListResponse } from 'src/app/services/trips-api.service';
 import { ActivatedRoute } from '@angular/router';
+import { TripService } from 'src/app/services/trip.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-trips',
@@ -10,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class TripsHomeComponent implements OnInit {
 
   public loading = false;
+  public page = 1;
 
   public response: TripListResponse;
   public futureTrips: ITrip[] = [];
@@ -17,21 +20,24 @@ export class TripsHomeComponent implements OnInit {
 
   constructor(
     private tripsApi: TripsApiService,
+    private tripService: TripService,
     private route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.retrieveTrips(params.page || 1);
+      this.page = params.page || 1;
+      this.retrieveTrips();
     });
+    this.tripService.subscribe(() => this.retrieveTrips());
   }
 
-  public async retrieveTrips(page = 1): Promise<void> {
+  public async retrieveTrips(): Promise<void> {
     this.loading = true;
     try {
-      this.response = (await this.tripsApi.list(page));
-      this.futureTrips = this.response.data.filter(trip => trip.ongoing);
-      this.pastTrips = this.response.data.filter(trip => !trip.ongoing);
+      this.response = (await this.tripsApi.list(this.page));
+      this.futureTrips = this.response.data.filter(trip => trip.ongoing || trip.days_left);
+      this.pastTrips = this.response.data.filter(trip => !trip.ongoing && !trip.days_left);
     } finally {
       this.loading = false;
     }

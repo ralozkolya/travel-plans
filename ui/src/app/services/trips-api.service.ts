@@ -28,4 +28,8 @@ export class TripsApiService extends ApiService {
   public create(payload: ICreateTripPayload): Promise<ITrip> {
     return this.post<ITrip, ICreateTripPayload>('/trips', payload);
   }
+
+  public remove(id: number): Promise<void> {
+    return super.delete<void>(`/trips/${id}`);
+  }
 }

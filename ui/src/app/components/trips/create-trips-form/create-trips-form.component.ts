@@ -1,6 +1,6 @@
 import Bluebird from 'bluebird';
 
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormComponent } from '../../base/form/form.component';
 import { Validators, FormGroup } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/utils/date-range.validator';
@@ -12,14 +12,11 @@ import { DateRangeValidator } from 'src/app/utils/date-range.validator';
 })
 export class CreateTripsFormComponent extends FormComponent {
 
-  @Output()
-  public created = new EventEmitter<void>();
-
   public form = this.getFormGroup();
 
   public async onSubmit(): Promise<void> {
     await this.submit(() => this.trips.create(this.form.value));
-    this.created.emit();
+    this.tripService.update();
     this.reset();
   }
 
