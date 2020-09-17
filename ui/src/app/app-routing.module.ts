@@ -19,25 +19,25 @@ const routes: Routes = [
   {
     path: 'trips/:id',
     component: EditTripComponent,
-    canActivate: [ AuthGuard ],
+    // canActivate: [ AuthGuard ],
     data: { animation: 3 }
   },
   {
     path: 'trips',
     component: TripsHomeComponent,
-    canActivate: [ AuthGuard ],
+    // canActivate: [ AuthGuard ],
     data: { animation: 2 }
   },
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [ GuestGuard ],
+    // canActivate: [ GuestGuard ],
     data: { animation: 4 }
   },
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [ GuestGuard ],
+    // canActivate: [ GuestGuard ],
     data: { animation: 5 }
   },
   {
