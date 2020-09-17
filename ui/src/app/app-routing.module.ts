@@ -10,11 +10,34 @@ import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'trips', component: TripsHomeComponent, canActivate: [ AuthGuard ] },
-  { path: 'login', component: LoginComponent, canActivate: [ GuestGuard ] },
-  { path: 'register', component: RegisterComponent, canActivate: [ GuestGuard ] },
-  { path: '**', component: PageNotFoundComponent },
+  {
+    path: '',
+    component: HomeComponent,
+    data: { animation: 1 }
+  },
+  {
+    path: 'trips',
+    component: TripsHomeComponent,
+    canActivate: [ AuthGuard ],
+    data: { animation: 2 }
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [ GuestGuard ],
+    data: { animation: 3 }
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [ GuestGuard ],
+    data: { animation: 4 }
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+    data: { animation: 5 }
+  },
 ];
 
 @NgModule({

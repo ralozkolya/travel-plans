@@ -1,4 +1,6 @@
 <app-loading [loading]="loading">
   <app-navigation></app-navigation>
-  <router-outlet></router-outlet>
+  <main [@routeAnimations]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </main>
 </app-loading>
