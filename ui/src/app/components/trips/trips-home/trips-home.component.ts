@@ -31,10 +31,17 @@ export class TripsHomeComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+
     this.route.queryParams.subscribe(params => {
       this.page = params.page || 1;
-      this.tripService.getObservable().subscribe(() => this.retrieveTrips());
+      this.tripService.getObservable().subscribe(() => {
+        this.retrieveTrips();
+        this.retrievePastTrips();
+      });
     });
+
+    this.retrievePastTrips();
+
     this.form.valueChanges.pipe(
       debounceTime(500)
     ).subscribe(this.retrieveTrips.bind(this));
@@ -44,11 +51,14 @@ export class TripsHomeComponent implements OnInit {
     this.loading = true;
     try {
       this.response = (await this.tripsApi.list(this.page, this.form.value.q));
-      this.futureTrips = this.response.data.filter(trip => trip.ongoing || trip.days_left);
-      this.pastTrips = this.response.data.filter(trip => !trip.ongoing && !trip.days_left);
+      this.futureTrips = this.response.data;
     } finally {
       this.loading = false;
     }
+  }
+
+  public async retrievePastTrips(): Promise<void> {
+    this.pastTrips = await this.tripsApi.listPast();
   }
 
 }

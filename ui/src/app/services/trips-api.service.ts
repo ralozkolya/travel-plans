@@ -29,7 +29,11 @@ export class TripsApiService extends ApiService {
       params.q = q;
     }
 
-    return this.get<TripListResponse>(`/trips`, params);
+    return this.get<TripListResponse>('/trips', params);
+  }
+
+  public listPast(): Promise<ITrip[]> {
+    return this.get<ITrip[]>('/trips/past');
   }
 
   public getTrip(id: number): Promise<ITrip> {

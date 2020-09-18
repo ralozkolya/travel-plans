@@ -6,18 +6,18 @@ use App\Models\Trip;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class TripsController extends Controller
 {
-    private $perPage = 2;
+    private $perPage = 5;
 
     public function index(Request $request)
     {
         $user = User::findOrFail(Auth::user()->id);
 
-        $collection = Trip::orderBy('start_date');
+        $collection = Trip::orderBy('start_date')
+            ->where('end_date', '>', date('Y-m-d', strtotime('now')));
 
         $q = $request->get('q');
 
@@ -33,6 +33,20 @@ class TripsController extends Controller
         }
 
         return $collection->paginate($this->perPage);
+    }
+
+    public function past()
+    {
+        $user = User::findOrFail(Auth::user()->id);
+
+        $collection = Trip::orderBy('start_date')
+            ->where('end_date', '<', date('Y-m-d', strtotime('now')));
+
+        if (!$user->isAdmin()) {
+            $collection->where([ 'user_id' => $user->id ]);
+        }
+
+        return $collection->take(5)->get();
     }
 
     public function show($id)
