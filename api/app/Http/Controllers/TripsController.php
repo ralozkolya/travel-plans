@@ -6,19 +6,27 @@ use App\Models\Trip;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class TripsController extends Controller
 {
-    private $perPage = 4;
+    private $perPage = 2;
 
-    public function index()
+    public function index(Request $request)
     {
-        // TODO: figure out the way to remove this call
-        // Need to retrieve Eloquent instance, otherwise linter complains
         $user = User::findOrFail(Auth::user()->id);
 
         $collection = Trip::orderBy('start_date');
+
+        $q = $request->get('q');
+
+        if ($q) {
+            $collection->where(function ($query) use ($q) {
+                $query->where('destination', 'like', '%'.$q.'%');
+                $query->orWhere('comment', 'like', '%'.$q.'%');
+            });
+        }
 
         if (!$user->isAdmin()) {
             $collection->where([ 'user_id' => $user->id ]);

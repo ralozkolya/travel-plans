@@ -21,8 +21,15 @@ export type TripListResponse = IPaginatedResponse<ITrip>;
 })
 export class TripsApiService extends ApiService {
 
-  public list(page = 1): Promise<TripListResponse> {
-    return this.get<TripListResponse>(`/trips`, { page: String(page) });
+  public list(page = 1, q: string = null): Promise<TripListResponse> {
+
+    const params: { page: string, q?: string } = { page: String(page) };
+
+    if (q) {
+      params.q = q;
+    }
+
+    return this.get<TripListResponse>(`/trips`, params);
   }
 
   public getTrip(id: number): Promise<ITrip> {

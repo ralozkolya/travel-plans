@@ -17,8 +17,8 @@ export class PaginationComponent {
   @Input()
   public showFirstLast = true;
 
-  @Output()
-  public page = new EventEmitter<number>();
+  @Input()
+  public additionalQuery;
 
   public get paginationNeeded(): boolean {
     return this.response?.total > this.response?.per_page;
@@ -62,9 +62,8 @@ export class PaginationComponent {
     return location.pathname;
   }
 
-  public onClick(page: number): void {
-    this.response.current_page = page;
-    this.page.emit(page);
+  public query(page = 1): { [ key: string ]: string; } {
+    return { ...this.additionalQuery, page };
   }
 
 }

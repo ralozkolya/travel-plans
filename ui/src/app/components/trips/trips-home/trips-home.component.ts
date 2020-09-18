@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TripsApiService, ITrip, TripListResponse } from 'src/app/services/trips-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
+import { FormControl, FormBuilder } from '@angular/forms';
+import { tap, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-trips',
@@ -17,10 +19,15 @@ export class TripsHomeComponent implements OnInit {
   public futureTrips: ITrip[] = [];
   public pastTrips: ITrip[] = [];
 
+  public form = this.formBuilder.group({
+    q: new FormControl('')
+  });
+
   constructor(
     private tripsApi: TripsApiService,
     private tripService: TripService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) {}
 
   public ngOnInit(): void {
@@ -28,12 +35,15 @@ export class TripsHomeComponent implements OnInit {
       this.page = params.page || 1;
       this.tripService.getObservable().subscribe(() => this.retrieveTrips());
     });
+    this.form.valueChanges.pipe(
+      debounceTime(500)
+    ).subscribe(this.retrieveTrips.bind(this));
   }
 
   public async retrieveTrips(): Promise<void> {
     this.loading = true;
     try {
-      this.response = (await this.tripsApi.list(this.page));
+      this.response = (await this.tripsApi.list(this.page, this.form.value.q));
       this.futureTrips = this.response.data.filter(trip => trip.ongoing || trip.days_left);
       this.pastTrips = this.response.data.filter(trip => !trip.ongoing && !trip.days_left);
     } finally {

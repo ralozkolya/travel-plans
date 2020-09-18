@@ -7,18 +7,32 @@
   <div class="row">
     <div class="col col-lg-8">
       <hr>
-      <app-loading [loading]="loading">
-        <app-trips-list [trips]="futureTrips"></app-trips-list>
-        <div *ngIf="pastTrips.length">
-          <h3 class="my-4">Past trips:</h3>
-          <app-trips-list [trips]="pastTrips" [size]="'small'"></app-trips-list>
+
+      <form [formGroup]="form" class="form-inline mb-3 justify-content-end">
+        <label class="sr-only" for="search">Search</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">Search</div>
+          </div>
+          <input id="search" type="text" class="form-control" formControlName="q">
         </div>
-        <app-pagination [response]="response"></app-pagination>
+      </form>
+
+      <app-loading [loading]="loading">
+
+        <app-trips-list [trips]="futureTrips"></app-trips-list>
+
+        <app-pagination [response]="response" [additionalQuery]="{ q: form.value.q }"></app-pagination>
+
       </app-loading>
     </div>
     <div class="col col-lg-4">
       <h3>Create a new trip plan:</h3>
       <app-create-trips-form></app-create-trips-form>
+      <div *ngIf="pastTrips.length">
+        <h3 class="my-4">Past trips:</h3>
+        <app-trips-list [trips]="pastTrips" [size]="'small'"></app-trips-list>
+      </div>
     </div>
   </div>
 </div>
