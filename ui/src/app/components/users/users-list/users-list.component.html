@@ -2,7 +2,7 @@
   <div *ngFor="let user of users" class="card mb-3">
     <div class="card-body">
       <h4 class="card-title">{{ user.name }}</h4>
-      <h5 class="card-subtitle text-muted">{{ user.email }}</h5>
+      <h5 class="card-subtitle text-muted">{{ user.role | titlecase }} - {{ user.email }}</h5>
       <div class="text-right">
         <app-delete-button (delete)="deleteUser(user.id)" (edit)="editUser(user.id)"></app-delete-button>
       </div>

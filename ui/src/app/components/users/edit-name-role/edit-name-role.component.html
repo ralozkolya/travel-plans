@@ -1,1 +1,32 @@
-<p>edit-name-role works!</p>
+<h3>Change user:</h3>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>
+      Name:
+      <input type="text" [class]="getClass('name')" formControlName="name" required>
+    </label>
+  </div>
+  <div class="form-group">
+    <label>
+      Role:
+      <select [class]="getClass('role')" formControlName="role">
+        <option value="user">User</option>
+        <option value="manager">Manager</option>
+        <option value="admin">Admin</option>
+      </select>
+    </label>
+  </div>
+  <div *ngIf="errors.length" class="alert alert-danger" @expandYAnimation>
+    <div *ngFor="let error of errors">{{ error }}</div>
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success" @expandYAnimation>
+    {{ successMessage }}
+  </div>
+  <div class="form-group">
+    <button [disabled]="shouldDisable" class="btn btn-block btn-dark">
+      <app-loading [loading]="loading" [large]="false">
+        Change
+      </app-loading>
+    </button>
+  </div>
+</form>
