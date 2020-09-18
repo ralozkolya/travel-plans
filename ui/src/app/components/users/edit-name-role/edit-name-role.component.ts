@@ -4,8 +4,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { FormComponent } from '../../base/form/form.component';
-import { IUser } from 'src/app/services/users-api.service';
+import { IUser, Role, User } from 'src/app/services/users-api.service';
 import { expandYAnimation } from 'src/app/animations/expand.animation';
+import { Roles } from 'src/app/enums/roles.enum';
 
 @Component({
   selector: 'app-edit-name-role',
@@ -18,10 +19,17 @@ export class EditNameRoleComponent extends FormComponent implements OnInit {
   @Input()
   public user: IUser = null;
 
+  public Roles = Roles;
+
   public form;
 
+  public loggedInUser: User;
+
   public ngOnInit(): void {
-    this.form = this.getFormGroup();
+    this.userService.getObservable().subscribe(user => {
+      this.loggedInUser = user;
+      this.form = this.getFormGroup();
+    });
   }
 
   public async onSubmit(): Promise<void> {
@@ -30,18 +38,29 @@ export class EditNameRoleComponent extends FormComponent implements OnInit {
   }
 
   private async reset(): Promise<void> {
+
     this.user.name = this.form.value.name;
-    this.user.role = this.form.value.role;
+
+    if (this.loggedInUser?.role !== Roles.user) {
+      this.user.role = this.form.value.role;
+    }
+
     this.form = this.getFormGroup();
     await Bluebird.delay(3000);
     this.successMessage = null;
   }
 
   private getFormGroup(): FormGroup {
-    return this.formBuilder.group({
+
+    const group: { name: FormControl, role?: FormControl } = {
       name: new FormControl(this.user.name, [ Validators.required ]),
-      role: new FormControl(this.user.role, [ Validators.required ]),
-    });
+    };
+
+    if (this.loggedInUser?.role !== Roles.user) {
+      group.role = new FormControl(this.user.role, [ Validators.required ])
+    }
+
+    return this.formBuilder.group(group);
   }
 
 }

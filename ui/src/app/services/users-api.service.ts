@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { ApiService, IPaginatedResponse } from './api.service';
+import { Roles } from '../enums/roles.enum';
 
-type Role = 'user' | 'manager' | 'admin';
+export type Role = Roles.user | Roles.manager | Roles.admin;
 export type User = IUser | null;
 
 export interface IUser {

@@ -60,13 +60,20 @@ export class FormComponent {
 
     } catch (e) {
 
+      console.log(e);
+
       if (e.error) {
-        const errors: string[] = [];
-        Object.keys(e.error).forEach(key => {
-          const array = Array.isArray(e.error[key]) ? e.error[key] : [ e.error[key] ];
-          errors.push.apply(errors, array);
-        });
-        this.errors = errors;
+
+        if (e.error.message) {
+          this.errors = [ e.error.message ];
+        } else {
+          const errors: string[] = [];
+          Object.keys(e.error).forEach(key => {
+            const array = Array.isArray(e.error[key]) ? e.error[key] : [ e.error[key] ];
+            errors.push.apply(errors, array.map(error => error.message || error));
+          });
+          this.errors = errors;
+        }
       } else {
         this.errors = [ 'Unexpected error occured' ];
       }

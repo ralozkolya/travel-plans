@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { User, UsersApiService } from 'src/app/services/users-api.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { Roles } from 'src/app/enums/roles.enum';
 
 @Component({
   selector: 'app-navigation',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class NavigationComponent implements OnInit {
 
   public user: User = null;
+  public Roles = Roles;
 
   constructor(
     private userService: UserService,

@@ -1,4 +1,5 @@
 import { FormGroup } from '@angular/forms';
+import { Roles } from '../enums/roles.enum';
 
 export function RoleValidator(controlName: string): (formGroup: FormGroup) => void {
 
@@ -6,7 +7,7 @@ export function RoleValidator(controlName: string): (formGroup: FormGroup) => vo
 
     const control = formGroup.controls[controlName];
 
-    if (!([ 'user', 'manager', 'admin' ].includes(control.value))) {
+    if (!Object.values(Roles).includes(control.value)) {
       control.setErrors({ roleValidator: true });
     } else {
       control.setErrors(null);

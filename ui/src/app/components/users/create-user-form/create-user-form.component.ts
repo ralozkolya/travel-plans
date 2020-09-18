@@ -5,6 +5,7 @@ import { FormComponent } from '../../base/form/form.component';
 import { Validators, FormGroup } from '@angular/forms';
 import { ConfirmedValidator } from 'src/app/utils/confirmed.validator';
 import { RoleValidator } from 'src/app/utils/role.validator';
+import { Roles } from 'src/app/enums/roles.enum';
 
 @Component({
   selector: 'app-create-user-form',
@@ -25,7 +26,7 @@ export class CreateUserFormComponent extends FormComponent {
     return this.formBuilder.group({
       name: ['', [ Validators.required ]],
       email: ['', [ Validators.required, Validators.email ]],
-      role: ['user', [ Validators.required, Validators.email ]],
+      role: [Roles.user, [ Validators.required, Validators.email ]],
       password: ['', [ Validators.required, Validators.minLength(6) ]],
       password_confirmation: ['', [ Validators.required, Validators.minLength(6) ]],
     }, {

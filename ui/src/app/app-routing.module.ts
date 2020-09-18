@@ -46,18 +46,18 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     // canActivate: [ GuestGuard ],
-    data: { animation: 6 }
+    data: { animation: 7 }
   },
   {
     path: 'register',
     component: RegisterComponent,
     // canActivate: [ GuestGuard ],
-    data: { animation: 7 }
+    data: { animation: 8 }
   },
   {
     path: '**',
     component: PageNotFoundComponent,
-    data: { animation: 8 }
+    data: { animation: 9 }
   },
 ];
 

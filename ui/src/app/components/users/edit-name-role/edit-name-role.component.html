@@ -6,7 +6,7 @@
       <input type="text" [class]="getClass('name')" formControlName="name" required>
     </label>
   </div>
-  <div class="form-group">
+  <div *ngIf="loggedInUser?.role !== Roles.user" class="form-group">
     <label>
       Role:
       <select [class]="getClass('role')" formControlName="role" required>

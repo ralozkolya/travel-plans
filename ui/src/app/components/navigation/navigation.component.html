@@ -6,13 +6,13 @@
     <li class="nav-item">
       <a class="nav-link" routerLink="/trips">My trips</a>
     </li>
-    <ng-container *ngIf="user.role !== 'user'">
+    <ng-container *ngIf="user.role !== Roles.user">
       <li class="nav-item">
         <a class="nav-link" routerLink="/users">Users</a>
       </li>
     </ng-container>
     <li class="nav-item">
-      <a class="nav-link" routerLink="/user">{{ user.name }}</a>
+      <a class="nav-link" routerLink="/users/{{ user.id }}">{{ user.name }}</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#" (click)="logout()">Logout</a>
