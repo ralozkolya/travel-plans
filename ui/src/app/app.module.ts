@@ -28,6 +28,7 @@ import { UsersListComponent } from './components/users/users-list/users-list.com
 import { EditUserComponent } from './components/users/edit-user/edit-user.component';
 import { EditPasswordComponent } from './components/users/edit-password/edit-password.component';
 import { EditNameRoleComponent } from './components/users/edit-name-role/edit-name-role.component';
+import { CreateUserFormComponent } from './components/users/create-user-form/create-user-form.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { EditNameRoleComponent } from './components/users/edit-name-role/edit-na
     UsersListComponent,
     EditUserComponent,
     EditPasswordComponent,
-    EditNameRoleComponent
+    EditNameRoleComponent,
+    CreateUserFormComponent
   ],
   imports: [
     BrowserModule,

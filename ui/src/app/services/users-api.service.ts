@@ -29,11 +29,15 @@ interface ILoginPayload {
   password: string;
 }
 
-export type UserListResponse = IPaginatedResponse<IUser>;
-
 interface IUpdatePayload extends Partial<IRegisterPayload> {
   role?: Role;
 }
+
+interface ICreatePayload extends IRegisterPayload {
+  role: Role;
+}
+
+export type UserListResponse = IPaginatedResponse<IUser>;
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +54,10 @@ export class UsersApiService extends ApiService {
 
   public getUser(id: number): Promise<IUser> {
     return this.get<IUser>(`/users/${id}`);
+  }
+
+  public create(payload: ICreatePayload): Promise<IUser> {
+    return this.post<IUser, ICreatePayload>('/users', payload);
   }
 
   public update(id: number, payload: IUpdatePayload): Promise<void> {

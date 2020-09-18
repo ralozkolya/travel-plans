@@ -25,6 +25,27 @@ class UsersController extends Controller
         return $user;
     }
 
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email|unique:users|max:256',
+            'name' => 'required|max:256',
+            'password' => 'required|confirmed|min:6',
+            'role' => [ Rule::in(User::ROLES), 'required' ]
+        ]);
+
+        $input = $request->only('email', 'name', 'password', 'role');
+
+        $user = new User();
+        $user->fill($input);
+        $user->password = $input['password'];
+        $user->role = $input['role'];
+
+        $user->save();
+
+        return response($user, 201);
+    }
+
     public function update(Request $request, $id)
     {
         $this->validate($request, [
