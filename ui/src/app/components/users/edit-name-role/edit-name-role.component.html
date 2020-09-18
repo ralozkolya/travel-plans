@@ -6,7 +6,7 @@
       <input type="text" [class]="getClass('name')" formControlName="name" required>
     </label>
   </div>
-  <div *ngIf="loggedInUser?.role !== Roles.user" class="form-group">
+  <div *ngIf="showRoleSelect" class="form-group">
     <label>
       Role:
       <select [class]="getClass('role')" formControlName="role" required>
@@ -14,6 +14,12 @@
         <option value="manager">Manager</option>
         <option value="admin">Admin</option>
       </select>
+    </label>
+  </div>
+  <div *ngIf="showRoleCheckbox" class="form-group">
+    <label>
+      Promote to manager:
+      <input type="checkbox" formControlName="role" value="manager">
     </label>
   </div>
   <div *ngIf="errors.length" class="alert alert-danger" @expandYAnimation>

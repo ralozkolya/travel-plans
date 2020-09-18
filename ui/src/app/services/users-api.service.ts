@@ -30,7 +30,7 @@ interface ILoginPayload {
   password: string;
 }
 
-interface IUpdatePayload extends Partial<IRegisterPayload> {
+export interface IUpdatePayload extends Partial<IRegisterPayload> {
   role?: Role;
 }
 

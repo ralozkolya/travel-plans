@@ -4,7 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { FormComponent } from '../../base/form/form.component';
-import { IUser, Role, User } from 'src/app/services/users-api.service';
+import { IUser, User, IUpdatePayload } from 'src/app/services/users-api.service';
 import { expandYAnimation } from 'src/app/animations/expand.animation';
 import { Roles } from 'src/app/enums/roles.enum';
 
@@ -33,8 +33,24 @@ export class EditNameRoleComponent extends FormComponent implements OnInit {
   }
 
   public async onSubmit(): Promise<void> {
-    await this.submit(() => this.users.update(this.user.id, this.form.value));
+
+    const payload: IUpdatePayload = { name: this.form.value.name };
+
+    if (this.form.value.role && typeof this.form.value.role === 'boolean') {
+      payload.role = Roles.manager;
+    }
+
+    await this.submit(() => this.users.update(this.user.id, payload));
     this.reset();
+  }
+
+  public get showRoleSelect(): boolean {
+    return this.loggedInUser.role === Roles.admin;
+  }
+
+  public get showRoleCheckbox(): boolean {
+    return this.loggedInUser.role === Roles.manager
+      && this.user.role === Roles.user;
   }
 
   private async reset(): Promise<void> {
@@ -56,8 +72,10 @@ export class EditNameRoleComponent extends FormComponent implements OnInit {
       name: new FormControl(this.user.name, [ Validators.required ]),
     };
 
-    if (this.loggedInUser?.role !== Roles.user) {
-      group.role = new FormControl(this.user.role, [ Validators.required ])
+    if (this.loggedInUser?.role === Roles.admin) {
+      group.role = new FormControl(this.user.role, [ Validators.required ]);
+    } else {
+      group.role = new FormControl('');
     }
 
     return this.formBuilder.group(group);
