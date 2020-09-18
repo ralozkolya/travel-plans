@@ -9,6 +9,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AuthGuard } from './guards/auth.guard';
 import { GuestGuard } from './guards/guest.guard';
 import { EditTripComponent } from './components/trips/edit-trip/edit-trip.component';
+import { UsersHomeComponent } from './components/users/users-home/users-home.component';
+import { EditUserComponent } from './components/users/edit-user/edit-user.component';
 
 const routes: Routes = [
   {
@@ -29,21 +31,33 @@ const routes: Routes = [
     data: { animation: 2 }
   },
   {
+    path: 'users/:id',
+    component: EditUserComponent,
+    // canActivate: [ GuestGuard ],
+    data: { animation: 5 }
+  },
+  {
+    path: 'users',
+    component: UsersHomeComponent,
+    // canActivate: [ GuestGuard ],
+    data: { animation: 4 }
+  },
+  {
     path: 'login',
     component: LoginComponent,
     // canActivate: [ GuestGuard ],
-    data: { animation: 4 }
+    data: { animation: 6 }
   },
   {
     path: 'register',
     component: RegisterComponent,
     // canActivate: [ GuestGuard ],
-    data: { animation: 5 }
+    data: { animation: 7 }
   },
   {
     path: '**',
     component: PageNotFoundComponent,
-    data: { animation: 6 }
+    data: { animation: 8 }
   },
 ];
 

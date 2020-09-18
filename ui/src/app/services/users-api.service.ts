@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { ApiService } from './api.service';
+import { ApiService, IPaginatedResponse } from './api.service';
 
 type Role = 'user' | 'manager' | 'admin';
 export type User = IUser | null;
 
-interface IUser {
+export interface IUser {
   id: number;
   name: string;
   email: string;
@@ -29,6 +29,12 @@ interface ILoginPayload {
   password: string;
 }
 
+export type UserListResponse = IPaginatedResponse<IUser>;
+
+interface IUpdatePayload extends Partial<IRegisterPayload> {
+  role?: Role;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,6 +42,22 @@ export class UsersApiService extends ApiService {
 
   public whoAmI(): Promise<IUser> {
     return this.get<IUser>(`/whoami`);
+  }
+
+  public list(page = 1): Promise<UserListResponse> {
+    return this.get<UserListResponse>('/users', { page: String(page) });
+  }
+
+  public getUser(id: number): Promise<IUser> {
+    return this.get<IUser>(`/users/${id}`);
+  }
+
+  public update(id: number, payload: IUpdatePayload): Promise<void> {
+    return this.patch<void, IUpdatePayload>(`/users/${id}`, payload);
+  }
+
+  public remove(id: number): Promise<void> {
+    return this.delete<void>(`/users/${id}`);
   }
 
   public register(payload: IRegisterPayload): Promise<IAuthResponse> {

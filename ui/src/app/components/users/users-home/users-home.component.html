@@ -1,0 +1,20 @@
+<div class="container mt-5">
+  <div class="row mb-3">
+    <div class="col">
+      <h1>Users:</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-lg-8">
+      <hr>
+      <app-loading [loading]="loading">
+        <app-users-list [users]="response?.data"></app-users-list>
+        <app-pagination [response]="response"></app-pagination>
+      </app-loading>
+    </div>
+    <div class="col col-lg-4">
+      <h3>Create a new user:</h3>
+      <app-create-trips-form></app-create-trips-form>
+    </div>
+  </div>
+</div>

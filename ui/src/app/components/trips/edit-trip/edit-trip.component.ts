@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Validators, FormGroup } from '@angular/forms';
 import { DateRangeValidator } from 'src/app/utils/date-range.validator';
 import { ITrip } from 'src/app/services/trips-api.service';
 import { FormComponent } from '../../base/form/form.component';
@@ -13,7 +13,7 @@ export class EditTripComponent extends FormComponent implements OnInit {
 
   public trip: ITrip;
 
-  public form;
+  public form: FormGroup;
 
   public ngOnInit(): void {
     this.route.params.subscribe(async ({ id }) => {

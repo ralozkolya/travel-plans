@@ -1,0 +1,15 @@
+<div *ngIf="user" class="container mt-5">
+  <div class="row mb-3">
+    <div class="col">
+      <h1>Edit {{ user.name }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-lg-6">
+      <app-edit-name-role></app-edit-name-role>
+    </div>
+    <div class="col col-lg-6">
+      <app-edit-password [user]="user"></app-edit-password>
+    </div>
+  </div>
+</div>
