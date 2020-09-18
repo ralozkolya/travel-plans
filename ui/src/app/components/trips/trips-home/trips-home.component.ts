@@ -3,7 +3,7 @@ import { TripsApiService, ITrip, TripListResponse } from 'src/app/services/trips
 import { ActivatedRoute } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
 import { FormControl, FormBuilder } from '@angular/forms';
-import { tap, debounceTime } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-trips',
