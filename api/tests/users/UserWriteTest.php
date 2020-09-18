@@ -105,6 +105,12 @@ class UserWriteTest extends TestCase
 
         $this->call('PATCH', "{$path}/{$admin->id}", [ 'name' => 'New name' ])
             ->assertForbidden();
+
+        $this->call('PATCH', "{$path}/{$manager->id}", [ 'role' => User::USER ])
+            ->assertForbidden();
+
+        $this->call('DELETE', "{$path}/{$manager->id}")
+            ->assertForbidden();
     }
 
     public function testUpdateAdmin()

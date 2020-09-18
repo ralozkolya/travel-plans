@@ -27,8 +27,11 @@ class UserPolicy
 
         // Manager is only allowed to change regular users, promote them to managers, or demote themselves
         if ($user->isManager()) {
-            return $role !== User::ADMIN
-                && ($target->isUser() || $user->id === $target->id);
+            if ($role) {
+                return $role === User::MANAGER && $target->isUser();
+            }
+
+            return $target->isUser() || $user->id === $target->id;
         }
 
         // Otherwise no promotions and only updating oneselves
@@ -46,9 +49,9 @@ class UserPolicy
             return true;
         }
 
-        // Manager can only delete regular users, or themselves
+        // Manager can only delete regular users
         if ($user->isManager()) {
-            return $target->role === User::USER || $user->id === $target->id;
+            return $target->role === User::USER;
         }
 
         return false;

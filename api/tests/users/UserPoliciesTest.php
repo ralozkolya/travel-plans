@@ -96,14 +96,14 @@ class UserPoliciesTest extends TestCase
 
         $this->assertTrue(Gate::allows('update', $user));
         $this->assertTrue(Gate::allows('update', [ $user, null ]));
-        $this->assertTrue(Gate::allows('update', [ $user, User::USER ]));
+        $this->assertTrue(Gate::denies('update', [ $user, User::USER ]));
         $this->assertTrue(Gate::allows('update', [ $user, User::MANAGER ]));
         $this->assertTrue(Gate::denies('update', [ $user, User::ADMIN ]));
 
         $this->assertTrue(Gate::allows('update', $manager));
         $this->assertTrue(Gate::allows('update', [ $manager, null ]));
-        $this->assertTrue(Gate::allows('update', [ $manager, User::USER ]));
-        $this->assertTrue(Gate::allows('update', [ $manager, User::MANAGER ]));
+        $this->assertTrue(Gate::denies('update', [ $manager, User::USER ]));
+        $this->assertTrue(Gate::denies('update', [ $manager, User::MANAGER ]));
         $this->assertTrue(Gate::denies('update', [ $manager, User::ADMIN ]));
 
         $this->assertTrue(Gate::denies('update', $anotherManager));
@@ -119,7 +119,7 @@ class UserPoliciesTest extends TestCase
         $this->assertTrue(Gate::denies('update', [ $admin, User::ADMIN ]));
 
         $this->assertTrue(Gate::allows('delete', $user));
-        $this->assertTrue(Gate::allows('delete', $manager));
+        $this->assertTrue(Gate::denies('delete', $manager));
         $this->assertTrue(Gate::denies('delete', $anotherManager));
         $this->assertTrue(Gate::denies('delete', $admin));
     }
