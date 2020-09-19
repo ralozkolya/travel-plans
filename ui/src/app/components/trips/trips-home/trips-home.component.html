@@ -22,7 +22,7 @@
 
         <app-trips-list [trips]="futureTrips"></app-trips-list>
 
-        <app-pagination [response]="response" [additionalQuery]="{ q: form.value.q }"></app-pagination>
+        <app-pagination [response]="response" [additionalQuery]="query"></app-pagination>
 
       </app-loading>
     </div>

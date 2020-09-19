@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TripsApiService, ITrip, TripListResponse } from 'src/app/services/trips-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
@@ -27,6 +27,7 @@ export class TripsHomeComponent implements OnInit {
     private tripsApi: TripsApiService,
     private tripService: TripService,
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder
   ) {}
 
@@ -44,7 +45,11 @@ export class TripsHomeComponent implements OnInit {
 
     this.form.valueChanges.pipe(
       debounceTime(500)
-    ).subscribe(this.retrieveTrips.bind(this));
+    ).subscribe(() => {
+      this.router.navigate([ '/trips' ], {
+        queryParams: this.query
+      });
+    });
   }
 
   public async retrieveTrips(): Promise<void> {
@@ -59,6 +64,11 @@ export class TripsHomeComponent implements OnInit {
 
   public async retrievePastTrips(): Promise<void> {
     this.pastTrips = await this.tripsApi.listPast();
+  }
+
+  public get query(): { [ key: string ]: string } {
+    const q = this.form.value.q;
+    return q ? { q } : null;
   }
 
 }
