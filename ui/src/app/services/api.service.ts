@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { UserService } from './user.service';
-import { Router } from '@angular/router';
 
 export interface IPaginatedResponse<T> {
   current_page: number;
@@ -18,14 +17,12 @@ export interface IPaginatedResponse<T> {
   data: T[];
 }
 
-const { urlRoot } = environment;
-
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  protected urlRoot = urlRoot;
+  protected urlRoot = environment.urlRoot;
 
   constructor(
     protected http: HttpClient,

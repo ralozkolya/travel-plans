@@ -8,7 +8,10 @@
     <div class="col-12 col-lg-8">
       <hr>
 
-      <form [formGroup]="form" class="form-inline mb-3 justify-content-end">
+      <form [formGroup]="form" class="form-inline mb-3">
+        <div class="mr-auto">
+          <a [href]="urlRoot + '/trips/month'" class="btn btn-dark">Plan for the next month (PDF)</a>
+        </div>
         <label class="sr-only" for="search">Search</label>
         <div class="input-group">
           <div class="input-group-prepend">

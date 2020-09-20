@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TripsApiService, ITrip, TripListResponse } from 'src/app/services/trips-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TripService } from 'src/app/services/trip.service';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+
+import { TripService } from '../../../services/trip.service';
+import { TripsApiService, ITrip, TripListResponse } from '../../../services/trips-api.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-trips',
@@ -18,6 +20,8 @@ export class TripsHomeComponent implements OnInit {
   public response: TripListResponse;
   public futureTrips: ITrip[] = [];
   public pastTrips: ITrip[] = [];
+
+  public urlRoot = environment.urlRoot;
 
   public form = this.formBuilder.group({
     q: new FormControl('')
