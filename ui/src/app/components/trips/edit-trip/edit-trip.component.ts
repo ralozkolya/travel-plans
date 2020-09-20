@@ -12,20 +12,26 @@ import { FormComponent } from '../../base/form/form.component';
 export class EditTripComponent extends FormComponent implements OnInit {
 
   public trip: ITrip;
+  public error: string;
 
   public form: FormGroup;
 
   public ngOnInit(): void {
     this.route.params.subscribe(async ({ id }) => {
-      this.trip = await this.trips.getTrip(id);
-      this.form = this.formBuilder.group({
-        destination: [ this.trip.destination, Validators.required ],
-        start_date: [ this.trip.start_date, Validators.required ],
-        end_date: [ this.trip.end_date, Validators.required ],
-        comment: [ this.trip.comment ],
-      }, {
-        validator: DateRangeValidator('start_date', 'end_date')
-      });
+
+      try {
+        this.trip = await this.trips.getTrip(id);
+        this.form = this.formBuilder.group({
+          destination: [ this.trip.destination, Validators.required ],
+          start_date: [ this.trip.start_date, Validators.required ],
+          end_date: [ this.trip.end_date, Validators.required ],
+          comment: [ this.trip.comment ],
+        }, {
+          validator: DateRangeValidator('start_date', 'end_date')
+        });
+      } catch (e) {
+        this.error = 'Network error';
+      }
     });
   }
 

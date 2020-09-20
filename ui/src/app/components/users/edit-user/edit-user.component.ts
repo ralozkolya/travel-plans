@@ -10,6 +10,7 @@ import { UsersApiService, User } from 'src/app/services/users-api.service';
 export class EditUserComponent implements OnInit {
 
   public user: User = null;
+  public error: string;
 
   constructor(
     private usersApi: UsersApiService,
@@ -18,7 +19,11 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(async ({ id }) => {
-      this.user = await this.usersApi.getUser(id);
+      try {
+        this.user = await this.usersApi.getUser(id);
+      } catch (e) {
+        this.error = 'Network error';
+      }
     });
   }
 
