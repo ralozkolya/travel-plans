@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Trip;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -11,13 +12,14 @@ use Illuminate\Support\Facades\Gate;
 class TripsController extends Controller
 {
     private $perPage = 5;
+    private $dateFormat = 'Y-m-d';
 
     public function index(Request $request)
     {
         $user = User::findOrFail(Auth::user()->id);
 
         $collection = Trip::orderBy('start_date')
-            ->where('end_date', '>', date('Y-m-d', strtotime('now')));
+            ->where('end_date', '>', $this->getDate('now'));
 
         $q = $request->get('q');
 
@@ -40,13 +42,34 @@ class TripsController extends Controller
         $user = User::findOrFail(Auth::user()->id);
 
         $collection = Trip::orderBy('start_date')
-            ->where('end_date', '<', date('Y-m-d', strtotime('now')));
+            ->where('end_date', '<', $this->getDate('now'));
 
         if (!$user->isAdmin()) {
             $collection->where([ 'user_id' => $user->id ]);
         }
 
         return $collection->take(5)->get();
+    }
+
+    public function month()
+    {
+        $user = User::findOrFail(Auth::user()->id);
+
+        $collection = Trip::where('start_date', '<', $this->getDate('1 month'))
+            ->orderBy('start_date');
+
+        if (!$user->isAdmin()) {
+            $collection->where([ 'user_id' => $user->id ]);
+        }
+
+        $data = [
+            'trips' => $collection->get(),
+            'start' => $this->getDate('now'),
+            'end' => $this->getDate('1 month'),
+            'user' => $user
+        ];
+
+        return PDF::loadView('next-month-plan', $data)->download('plan.pdf');
     }
 
     public function show($id)
@@ -102,5 +125,10 @@ class TripsController extends Controller
         $trip->delete();
 
         return response(null, 204);
+    }
+
+    private function getDate($str)
+    {
+        return date($this->dateFormat, strtotime($str));
     }
 }
