@@ -55,12 +55,9 @@ class TripsController extends Controller
     {
         $user = User::findOrFail(Auth::user()->id);
 
-        $collection = Trip::where('start_date', '<', $this->getDate('1 month'))
+        $collection = $user->trips()
+            ->where('start_date', '<', $this->getDate('1 month'))
             ->orderBy('start_date');
-
-        if (!$user->isAdmin()) {
-            $collection->where([ 'user_id' => $user->id ]);
-        }
 
         $data = [
             'trips' => $collection->get(),
