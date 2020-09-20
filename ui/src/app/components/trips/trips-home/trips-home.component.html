@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col col-lg-8">
+    <div class="col-12 col-lg-8">
       <hr>
 
       <form [formGroup]="form" class="form-inline mb-3 justify-content-end">
@@ -26,7 +26,7 @@
 
       </app-loading>
     </div>
-    <div class="col col-lg-4">
+    <div class="col-12 col-lg-4">
       <h3>Create a new trip plan:</h3>
       <app-create-trips-form></app-create-trips-form>
       <div *ngIf="pastTrips.length">

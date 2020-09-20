@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { User, UsersApiService } from 'src/app/services/users-api.service';
 import { UserService } from 'src/app/services/user.service';
@@ -14,6 +14,8 @@ export class NavigationComponent implements OnInit {
 
   public user: User = null;
   public Roles = Roles;
+
+  public open = false;
 
   constructor(
     private userService: UserService,
@@ -31,6 +33,10 @@ export class NavigationComponent implements OnInit {
       this.router.navigateByUrl('/');
     });
     return false;
+  }
+
+  public toggleMenu(): void {
+    this.open = !this.open;
   }
 
 }

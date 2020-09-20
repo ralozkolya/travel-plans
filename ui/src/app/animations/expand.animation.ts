@@ -1,4 +1,4 @@
-import { style, animate, trigger, transition, state } from '@angular/animations';
+import { style, animate, trigger, transition } from '@angular/animations';
 
 export const showHideAnimation = trigger('showHideAnimation', [
   transition(':enter', [

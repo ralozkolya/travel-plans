@@ -2,30 +2,41 @@
   <a class="navbar-brand" routerLink="/">
     Travel plans
   </a>
-  <ul *ngIf="user; else elseBlock" class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/trips">My trips</a>
-    </li>
-    <ng-container *ngIf="user.role !== Roles.user">
+  <button
+    class="navbar-toggler"
+    type="button"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    (click)="toggleMenu()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse text-right" id="navbar" [class.open]="open" (click)="open = false">
+    <ul *ngIf="user; else elseBlock" class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/users">Users</a>
+        <a class="nav-link" routerLink="/trips">My trips</a>
       </li>
-    </ng-container>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/users/{{ user.id }}">{{ user.name }}</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" (click)="logout()">Logout</a>
-    </li>
-  </ul>
-  <ng-template #elseBlock>
-    <ul class="navbar-nav ml-auto">
+      <ng-container *ngIf="user.role !== Roles.user">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/users">Users</a>
+        </li>
+      </ng-container>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/login">Login</a>
+        <a class="nav-link" routerLink="/users/{{ user.id }}">{{ user.name }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/register">Register</a>
+        <a class="nav-link" href="#" (click)="logout()">Logout</a>
       </li>
     </ul>
-  </ng-template>
+    <ng-template #elseBlock>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+      </ul>
+    </ng-template>
+  </div>
 </nav>
