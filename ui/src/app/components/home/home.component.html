@@ -1,7 +1,23 @@
 <div class="container mt-5">
-  <div class="row">
-    <div class="col">
-      <h1>Home, sweet home</h1>
+  <h1>Web-app for planning your trips</h1>
+  <hr>
+  <h3 class="text-muted">Toptal take-home task</h3>
+  <div class="row mt-5">
+    <div class="col-12 col-lg-6">
+      <img class="img-fluid rounded shadow" src="/assets/screen.png" alt="Trips list">
+    </div>
+    <div class="col-12 col-lg-6">
+      <ul class="mt-5">
+        <li><h4>Easily create, edit or delete your travel plans;</h4></li>
+        <li><h4>Download your plan for the next month as a PDF.</h4></li>
+        <li><h4>Moderate users and/or trips with privileged account.</h4></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-md-4 offset-md-4">
+      <a *ngIf="!user" class="btn btn-dark btn-block" routerLink="/register">Join</a>
+      <a *ngIf="user" class="btn btn-dark btn-block" routerLink="/trips">See your trips</a>
     </div>
   </div>
 </div>
