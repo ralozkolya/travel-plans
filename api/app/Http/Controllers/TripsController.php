@@ -56,6 +56,7 @@ class TripsController extends Controller
         $user = User::findOrFail(Auth::user()->id);
 
         $collection = $user->trips()
+            ->where('start_date', '>=', $this->getDate('now'))
             ->where('start_date', '<', $this->getDate('1 month'))
             ->orderBy('start_date');
 
