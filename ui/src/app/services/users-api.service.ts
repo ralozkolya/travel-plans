@@ -35,7 +35,7 @@ export interface IUpdatePayload extends Partial<IRegisterPayload> {
 }
 
 interface IUpdatePasswordPayload {
-  old_password: string;
+  your_password: string;
   password: string;
   password_confirmation: string;
 }

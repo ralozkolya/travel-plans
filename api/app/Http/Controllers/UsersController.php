@@ -69,7 +69,7 @@ class UsersController extends Controller
     public function password(Request $request, $id)
     {
         $this->validate($request, [
-            'old_password' => 'required',
+            'your_password' => 'required',
             'password' => 'confirmed|min:6|required'
         ]);
 
@@ -78,11 +78,11 @@ class UsersController extends Controller
 
         $credentials = [
             'email' => Auth::user()->email,
-            'password' => $request->get('old_password')
+            'password' => $request->get('your_password')
         ];
 
         if (!Auth::attempt($credentials)) {
-            return response([ 'error' => 'Incorrect old password' ], 403);
+            return response([ 'error' => 'Incorrect password' ], 403);
         }
 
         $user->password = $request->get('password', $user->password);

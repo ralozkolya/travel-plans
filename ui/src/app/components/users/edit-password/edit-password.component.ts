@@ -34,7 +34,7 @@ export class EditPasswordComponent extends FormComponent {
 
   private getFormGroup(): FormGroup {
     return this.formBuilder.group({
-      old_password: new FormControl('', [ Validators.required ]),
+      your_password: new FormControl('', [ Validators.required ]),
       password: new FormControl('', [ Validators.required, Validators.minLength(6) ]),
       password_confirmation: new FormControl('', [ Validators.required, Validators.minLength(6) ]),
     }, {
