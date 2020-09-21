@@ -38,6 +38,8 @@ export class EditNameRoleComponent extends FormComponent implements OnInit {
 
     if (this.form.value.role && typeof this.form.value.role === 'boolean') {
       payload.role = Roles.manager;
+    } else {
+      payload.role = this.form.value.role;
     }
 
     await this.submit(() => this.users.update(this.user.id, payload));
