@@ -26,7 +26,7 @@ export class ApiService {
 
   constructor(
     protected http: HttpClient,
-    private userService: UserService
+    protected userService: UserService
   ) {}
 
   protected get<T>(url: string, params: { [ key: string ]: string } = {}, withCredentials = true): Promise<T> {

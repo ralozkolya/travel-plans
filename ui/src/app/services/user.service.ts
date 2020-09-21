@@ -10,6 +10,8 @@ export class UserService {
   private subject = new BehaviorSubject<User>(null);
   private listSubject = new BehaviorSubject<void>(undefined);
 
+  private user: User = null;
+
   public getObservable(): Observable<User> {
     return this.subject.asObservable();
   }
@@ -19,10 +21,15 @@ export class UserService {
   }
 
   public setUser(user: User): void {
+    this.user = user;
     this.subject.next(user);
   }
 
   public updateList(): void {
     this.listSubject.next();
+  }
+
+  public getUser(): User {
+    return this.user;
   }
 }

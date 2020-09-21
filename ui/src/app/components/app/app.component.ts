@@ -23,8 +23,7 @@ export class AppComponent implements OnInit {
     this.userService.getObservable().subscribe(user => this.user = user);
 
     try {
-      this.user = await this.usersApi.whoAmI();
-      this.userService.setUser(this.user);
+      await this.usersApi.whoAmI();
     } finally {
       this.loading = false;
     }

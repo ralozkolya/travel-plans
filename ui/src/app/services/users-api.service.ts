@@ -45,8 +45,10 @@ export type UserListResponse = IPaginatedResponse<IUser>;
 })
 export class UsersApiService extends ApiService {
 
-  public whoAmI(): Promise<IUser> {
-    return this.get<IUser>(`/whoami`);
+  public async whoAmI(): Promise<IUser> {
+    const user = (await this.get<IUser>(`/whoami`)) || null;
+    this.userService.setUser(user);
+    return user;
   }
 
   public list(page = 1): Promise<UserListResponse> {

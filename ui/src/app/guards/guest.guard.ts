@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
+import { UsersApiService } from '../services/users-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GuestGuard implements CanActivate {
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private usersApi: UsersApiService
+  ) {}
 
-  canActivate(): Observable<boolean> {
-      return this.userService.getObservable().pipe(
-        map(user => !user)
-      );
+  async canActivate(): Promise<boolean> {
+    return !(this.userService.getUser()
+      || await this.usersApi.whoAmI());
   }
 
 }
