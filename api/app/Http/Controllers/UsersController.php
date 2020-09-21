@@ -51,17 +51,41 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'max:256|required_without_all:password,role',
-            'password' => 'confirmed|min:6|required_without_all:name,role',
-            'role' => [ Rule::in(User::ROLES), 'required_without_all:name,password' ]
+            'name' => 'max:256|required_without:role',
+            'role' => [ Rule::in(User::ROLES), 'required_without:name' ]
         ]);
 
         $user = User::findOrFail($id);
         Gate::authorize('update', [ $user, $request->get('role') ]);
 
         $user->name = $request->get('name', $user->name);
-        $user->password = $request->get('password', $user->password);
         $user->role = $request->get('role', $user->role);
+
+        $user->save();
+
+        return response(null, 204);
+    }
+
+    public function password(Request $request, $id)
+    {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => 'confirmed|min:6|required'
+        ]);
+
+        $user = User::findOrFail($id);
+        Gate::authorize('update', [ $user, $request->get('role') ]);
+
+        $credentials = [
+            'email' => Auth::user()->email,
+            'password' => $request->get('old_password')
+        ];
+
+        if (!Auth::attempt($credentials)) {
+            return response([ 'error' => 'Incorrect old password' ], 403);
+        }
+
+        $user->password = $request->get('password', $user->password);
 
         $user->save();
 

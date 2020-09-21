@@ -22,7 +22,7 @@ export class EditPasswordComponent extends FormComponent {
   public form = this.getFormGroup();
 
   public async onSubmit(): Promise<void> {
-    await this.submit(() => this.users.update(this.user.id, this.form.value));
+    await this.submit(() => this.users.updatePassword(this.user.id, this.form.value));
     this.reset();
   }
 
@@ -34,6 +34,7 @@ export class EditPasswordComponent extends FormComponent {
 
   private getFormGroup(): FormGroup {
     return this.formBuilder.group({
+      old_password: new FormControl('', [ Validators.required ]),
       password: new FormControl('', [ Validators.required, Validators.minLength(6) ]),
       password_confirmation: new FormControl('', [ Validators.required, Validators.minLength(6) ]),
     }, {

@@ -60,8 +60,6 @@ export class FormComponent {
 
     } catch (e) {
 
-      console.log(e);
-
       if (e.error) {
 
         if (e.error.message) {
@@ -75,7 +73,7 @@ export class FormComponent {
           this.errors = errors;
         }
       } else {
-        this.errors = [ 'Unexpected error occured' ];
+        this.errors = [ e.statusText || 'Unexpected error occured' ];
       }
 
       throw e;

@@ -34,6 +34,12 @@ export interface IUpdatePayload extends Partial<IRegisterPayload> {
   role?: Role;
 }
 
+interface IUpdatePasswordPayload {
+  old_password: string;
+  password: string;
+  password_confirmation: string;
+}
+
 interface ICreatePayload extends IRegisterPayload {
   role: Role;
 }
@@ -65,6 +71,10 @@ export class UsersApiService extends ApiService {
 
   public update(id: number, payload: IUpdatePayload): Promise<void> {
     return this.patch<void, IUpdatePayload>(`/users/${id}`, payload);
+  }
+
+  public updatePassword(id: number, payload: IUpdatePasswordPayload): Promise<void> {
+    return this.post<void, IUpdatePasswordPayload>(`/users/${id}/password`, payload);
   }
 
   public remove(id: number): Promise<void> {

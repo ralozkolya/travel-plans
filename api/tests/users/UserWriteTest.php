@@ -7,10 +7,6 @@ class UserWriteTest extends TestCase
     public function testUpdateUser()
     {
         $path = "{$this->path}/users";
-        $passwordPayload = [ 'password' => 'irrelevant' ];
-        $passwordIncorrect = array_merge($passwordPayload, [ 'password_confirmation' => 'somethingElse' ]);
-        $confirmedPassword = array_merge($passwordPayload, [ 'password_confirmation' => $passwordPayload['password'] ]);
-        $shortConfirmedPassword = array_map(function ($item) { return mb_substr($item, 0, 4); }, $confirmedPassword);
 
         $this->actingAs($this->user);
 
@@ -32,22 +28,7 @@ class UserWriteTest extends TestCase
         $this->call('PATCH', "{$path}/{$this->user->id}", [ 'name' => 'New name' ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$this->user->id}", $passwordPayload)
-            ->assertStatus(422);
-
-        $this->call('PATCH', "{$path}/{$this->user->id}", $passwordIncorrect)
-            ->assertStatus(422);
-
-        $this->call('PATCH', "{$path}/{$this->user->id}", $shortConfirmedPassword)
-            ->assertStatus(422);
-
-        $this->call('PATCH', "{$path}/{$this->user->id}", $confirmedPassword)
-            ->assertNoContent();
-
         $this->call('PATCH', "{$path}/{$this->anotherUser->id}", [ 'name' => 'New name' ])
-            ->assertForbidden();
-
-        $this->call('PATCH', "{$path}/{$this->admin->id}", $confirmedPassword)
             ->assertForbidden();
 
         $this->call('DELETE', "{$path}/{$this->user->id}")
