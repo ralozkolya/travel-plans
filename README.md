@@ -21,5 +21,3 @@ API is implemented using [Lumen framework](https://lumen.laravel.com/), backed b
 UI is implemented using [Angular](https://angular.io/)
 
 Additional details can be found in respective directories
-
-For the time being, none of tech stack decisions are final
