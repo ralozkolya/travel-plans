@@ -1,149 +1,142 @@
 <?php
 
 use App\Models\User;
-use Laravel\Lumen\Testing\DatabaseMigrations;
 
 class UserWriteTest extends TestCase
 {
-    use DatabaseMigrations;
-
-    private $path;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->path = $this::PATH;
-        $this->users = $this->createUsers();
-    }
-
-    public function testRegisterUser()
-    {
-        $user = factory(User::class)->make()->toArray();
-
-        $this->call('POST', "{$this->path}/register", array_merge($user, [
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ]))->assertCreated();
-    }
-
     public function testUpdateUser()
     {
-        [
-            'user1' => $user,
-            'user2' => $anotherUser,
-            'admin1' => $admin,
-        ] = $this->users;
-
         $path = "{$this->path}/users";
         $passwordPayload = [ 'password' => 'irrelevant' ];
         $passwordIncorrect = array_merge($passwordPayload, [ 'password_confirmation' => 'somethingElse' ]);
         $confirmedPassword = array_merge($passwordPayload, [ 'password_confirmation' => $passwordPayload['password'] ]);
         $shortConfirmedPassword = array_map(function ($item) { return mb_substr($item, 0, 4); }, $confirmedPassword);
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
 
-        $this->call('PATCH', "{$path}/{$user->id}")
+        $this->call('PATCH', "{$path}/{$this->user->id}")
             ->assertStatus(422);
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'role' => 'nonexistent' ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'role' => 'nonexistent' ])
             ->assertStatus(422);
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'role' => User::ADMIN ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'role' => User::ADMIN ])
             ->assertForbidden();
 
-        $this->call('PATCH', "{$path}/{$anotherUser->id}")
+        $this->call('PATCH', "{$path}/{$this->anotherUser->id}")
             ->assertStatus(422);
 
-        $this->call('PATCH', "{$path}/{$anotherUser->id}", [ 'role' => User::MANAGER ])
+        $this->call('PATCH', "{$path}/{$this->anotherUser->id}", [ 'role' => User::MANAGER ])
             ->assertForbidden();
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'name' => 'New name' ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'name' => 'New name' ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$user->id}", $passwordPayload)
+        $this->call('PATCH', "{$path}/{$this->user->id}", $passwordPayload)
             ->assertStatus(422);
 
-        $this->call('PATCH', "{$path}/{$user->id}", $passwordIncorrect)
+        $this->call('PATCH', "{$path}/{$this->user->id}", $passwordIncorrect)
             ->assertStatus(422);
 
-        $this->call('PATCH', "{$path}/{$user->id}", $shortConfirmedPassword)
+        $this->call('PATCH', "{$path}/{$this->user->id}", $shortConfirmedPassword)
             ->assertStatus(422);
 
-        $this->call('PATCH', "{$path}/{$user->id}", $confirmedPassword)
+        $this->call('PATCH', "{$path}/{$this->user->id}", $confirmedPassword)
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$anotherUser->id}", [ 'name' => 'New name' ])
+        $this->call('PATCH', "{$path}/{$this->anotherUser->id}", [ 'name' => 'New name' ])
             ->assertForbidden();
 
-        $this->call('PATCH', "{$path}/{$admin->id}", $confirmedPassword)
+        $this->call('PATCH', "{$path}/{$this->admin->id}", $confirmedPassword)
+            ->assertForbidden();
+
+        $this->call('DELETE', "{$path}/{$this->user->id}")
+            ->assertForbidden();
+
+        $this->call('DELETE', "{$path}/{$this->anotherUser->id}")
+            ->assertForbidden();
+
+        $this->call('DELETE', "{$path}/{$this->manager->id}")
+            ->assertForbidden();
+
+        $this->call('DELETE', "{$path}/{$this->admin->id}")
             ->assertForbidden();
     }
 
     public function testUpdateManager()
     {
-        [
-            'user1' => $user,
-            'manager1' => $manager,
-            'admin1' => $admin
-        ] = $this->users;
-
         $path = "{$this->path}/users";
 
-        $this->actingAs($manager);
+        $this->actingAs($this->manager);
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'role' => User::ADMIN ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'role' => User::ADMIN ])
             ->assertForbidden();
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'name' => 'New name' ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'name' => 'New name' ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'role' => User::MANAGER ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'role' => User::MANAGER ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'role' => User::USER ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'role' => User::USER ])
             ->assertForbidden();
 
-        $this->call('PATCH', "{$path}/{$admin->id}", [ 'name' => 'New name' ])
+        $this->call('PATCH', "{$path}/{$this->admin->id}", [ 'name' => 'New name' ])
             ->assertForbidden();
 
-        $this->call('PATCH', "{$path}/{$manager->id}", [ 'role' => User::USER ])
+        $this->call('PATCH', "{$path}/{$this->manager->id}", [ 'role' => User::USER ])
             ->assertForbidden();
 
-        $this->call('DELETE', "{$path}/{$manager->id}")
+        $this->call('DELETE', "{$path}/{$this->anotherUser->id}")
+            ->assertNoContent();
+
+        $this->call('DELETE', "{$path}/{$this->manager->id}")
+            ->assertForbidden();
+
+        $this->call('DELETE', "{$path}/{$this->anotherManager->id}")
+            ->assertForbidden();
+
+        $this->call('DELETE', "{$path}/{$this->admin->id}")
             ->assertForbidden();
     }
 
     public function testUpdateAdmin()
     {
-        [
-            'user1' => $user,
-            'manager1' => $manager,
-            'admin1' => $admin
-        ] = $this->users;
-
         $path = "{$this->path}/users";
 
-        $this->actingAs($admin);
+        $this->actingAs($this->admin);
 
-        $this->call('PATCH', "{$path}/{$user->id}")
+        $this->call('PATCH', "{$path}/{$this->user->id}")
             ->assertStatus(422);
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'role' => User::ADMIN ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'role' => User::ADMIN ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'name' => 'New name' ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'name' => 'New name' ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'role' => User::MANAGER ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'role' => User::MANAGER ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$user->id}", [ 'role' => User::USER ])
+        $this->call('PATCH', "{$path}/{$this->user->id}", [ 'role' => User::USER ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$admin->id}", [ 'name' => 'New name' ])
+        $this->call('PATCH', "{$path}/{$this->admin->id}", [ 'name' => 'New name' ])
             ->assertNoContent();
 
-        $this->call('PATCH', "{$path}/{$manager->id}", [ 'role' => User::USER ])
+        $this->call('PATCH', "{$path}/{$this->manager->id}", [ 'role' => User::USER ])
             ->assertNoContent();
+
+        $this->call('DELETE', "{$path}/{$this->user->id}")
+            ->assertNoContent();
+
+        $this->call('DELETE', "{$path}/{$this->manager->id}")
+            ->assertNoContent();
+
+        $this->call('DELETE', "{$path}/{$this->anotherAdmin->id}")
+            ->assertNoContent();
+
+        $this->call('DELETE', "{$path}/{$this->admin->id}")
+            ->assertForbidden();
     }
 }

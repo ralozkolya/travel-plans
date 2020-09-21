@@ -36,6 +36,8 @@ class UsersController extends Controller
 
         $input = $request->only('email', 'name', 'password', 'role');
 
+        Gate::authorize('create', [ User::class, $input['role'] ]);
+
         $user = new User();
         $user->fill($input);
         $user->password = $input['password'];

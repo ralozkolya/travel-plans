@@ -1,46 +1,30 @@
 <?php
 
-use App\Models\User;
-use Laravel\Lumen\Testing\DatabaseMigrations;
-
 class UserReadTest extends TestCase
 {
-    use DatabaseMigrations;
-
-    private $path;
-    private $users;
-
-    public function setUp(): void
+    public function testWhoAmI()
     {
-        parent::setUp();
-        $this->path = $this::PATH;
-        $this->users = $this->createUsers();
-    }
+        $path = "{$this->path}/whoami";
 
-    public function testEnsureAllUsers()
-    {
-        $users = User::all()->toArray();
+        $this->call('GET', $path)
+            ->assertOk();
 
-        $this->assertIsArray($users);
-        $this->assertEquals(6, count($users));
+        $this->actingAs($this->user);
+
+        $this->call('GET', $path)
+            ->assertOk();
     }
 
     public function testListUsers()
     {
-        [
-            'user1' => $user,
-            'manager1' => $manager,
-            'admin1' => $admin
-        ] = $this->users;
-
         $path = "{$this->path}/users";
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
 
         $this->call('GET', $path)
             ->assertForbidden();
 
-        $this->actingAs($manager);
+        $this->actingAs($this->manager);
 
         $response = $this->call('GET', $path);
         $response
@@ -50,7 +34,7 @@ class UserReadTest extends TestCase
         ]);
         $this->assertEquals(6, count($response['data']));
 
-        $this->actingAs($admin);
+        $this->actingAs($this->admin);
 
         $response = $this->call('GET', $path);
         $response
@@ -63,69 +47,60 @@ class UserReadTest extends TestCase
 
     public function testShowAsUser()
     {
-        [
-            'user1' => $user,
-            'user2' => $anotherUser,
-            'manager1' => $manager,
-            'manager2' => $anotherManager,
-            'admin1' => $admin,
-            'admin2' => $anotherAdmin,
-        ] = $this->users;
-
         $path = "{$this->path}/users";
 
 
-        $this->actingAs($user);
+        $this->actingAs($this->user);
 
-        $this->call('GET', "{$path}/{$user->id}")
+        $this->call('GET', "{$path}/{$this->user->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $user->id ]);
+            ->assertJson([ 'id' => $this->user->id ]);
 
-        $this->call('GET', "{$path}/{$anotherUser->id}")
+        $this->call('GET', "{$path}/{$this->anotherUser->id}")
             ->assertForbidden();
 
-        $this->call('GET', "{$path}/{$manager->id}")
+        $this->call('GET', "{$path}/{$this->manager->id}")
             ->assertForbidden();
 
-        $this->call('GET', "{$path}/{$admin->id}")
+        $this->call('GET', "{$path}/{$this->admin->id}")
             ->assertForbidden();
 
 
-        $this->actingAs($manager);
+        $this->actingAs($this->manager);
 
-        $this->call('GET', "{$path}/{$user->id}")
+        $this->call('GET', "{$path}/{$this->user->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $user->id ]);
+            ->assertJson([ 'id' => $this->user->id ]);
 
-        $this->call('GET', "{$path}/{$manager->id}")
+        $this->call('GET', "{$path}/{$this->manager->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $manager->id ]);
+            ->assertJson([ 'id' => $this->manager->id ]);
 
-        $this->call('GET', "{$path}/{$anotherManager->id}")
+        $this->call('GET', "{$path}/{$this->anotherManager->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $anotherManager->id ]);
+            ->assertJson([ 'id' => $this->anotherManager->id ]);
 
-        $this->call('GET', "{$path}/{$admin->id}")
+        $this->call('GET', "{$path}/{$this->admin->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $admin->id ]);
+            ->assertJson([ 'id' => $this->admin->id ]);
 
 
-        $this->actingAs($admin);
+        $this->actingAs($this->admin);
 
-        $this->call('GET', "{$path}/{$user->id}")
+        $this->call('GET', "{$path}/{$this->user->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $user->id ]);
+            ->assertJson([ 'id' => $this->user->id ]);
 
-        $this->call('GET', "{$path}/{$manager->id}")
+        $this->call('GET', "{$path}/{$this->manager->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $manager->id ]);
+            ->assertJson([ 'id' => $this->manager->id ]);
 
-        $this->call('GET', "{$path}/{$admin->id}")
+        $this->call('GET', "{$path}/{$this->admin->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $admin->id ]);
+            ->assertJson([ 'id' => $this->admin->id ]);
 
-        $this->call('GET', "{$path}/{$anotherAdmin->id}")
+        $this->call('GET', "{$path}/{$this->anotherAdmin->id}")
             ->assertOk()
-            ->assertJson([ 'id' => $anotherAdmin->id ]);;
+            ->assertJson([ 'id' => $this->anotherAdmin->id ]);;
     }
 }

@@ -18,7 +18,13 @@ class UserPolicy
             || $user->id === $target->id;
     }
 
-    public function update(User $user, $target, $role = null)
+    public function create(User $user, $role = null)
+    {
+        return $user->isAdmin()
+            || ($user->isManager() && $role !== User::ADMIN);
+    }
+
+    public function update(User $user, User $target, $role = null)
     {
         // Admin can always change anything
         if ($user->isAdmin()) {
