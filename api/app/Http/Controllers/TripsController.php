@@ -51,7 +51,7 @@ class TripsController extends Controller
         return $collection->take(5)->get();
     }
 
-    public function month()
+    public function month(Request $request)
     {
         $user = User::findOrFail(Auth::user()->id);
 
@@ -66,12 +66,18 @@ class TripsController extends Controller
             'user' => $user
         ];
 
+        if ($request->get('dl') === '0') {
+            return view('next-month-plan', $data);
+        }
+
         return PDF::loadView('next-month-plan', $data)->download('plan.pdf');
     }
 
     public function show($id)
     {
-        return Trip::findOrFail($id);
+        $trip = Trip::findOrFail($id);
+        Gate::authorize('update', $trip);
+        return $trip;
     }
 
     public function store(Request $request)
