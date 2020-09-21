@@ -41,10 +41,9 @@ export class TripsHomeComponent implements OnInit {
       this.page = params.page || 1;
       this.tripService.getObservable().subscribe(() => {
         this.retrieveTrips();
+        this.retrievePastTrips();
       });
     });
-
-    this.retrievePastTrips();
 
     this.form.valueChanges.pipe(
       debounceTime(500)

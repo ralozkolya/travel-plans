@@ -34,7 +34,10 @@
       <app-create-trips-form></app-create-trips-form>
       <div *ngIf="pastTrips.length">
         <h3 class="my-4">Past trips:</h3>
-        <app-trips-list [trips]="pastTrips" [size]="'small'"></app-trips-list>
+
+        <app-loading [loading]="loading">
+          <app-trips-list [trips]="pastTrips" size="small"></app-trips-list>
+        </app-loading>
       </div>
     </div>
   </div>
