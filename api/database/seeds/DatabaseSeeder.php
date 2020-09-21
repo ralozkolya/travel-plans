@@ -20,14 +20,14 @@ class DatabaseSeeder extends Seeder
             'role' => User::ADMIN,
         ]);
 
-        $user = User::create([
+        $manager = User::create([
             'name' => 'Manager',
             'email' => 'manager@example.com',
             'password' => 'password',
             'role' => User::MANAGER,
         ]);
 
-        $manager = User::create([
+        $user = User::create([
             'name' => 'User',
             'email' => 'user@example.com',
             'password' => 'password',

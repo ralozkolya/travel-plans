@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Trip;
 use App\Models\User;
 use Laravel\Lumen\Testing\TestCase as BaseTestCase;
 
