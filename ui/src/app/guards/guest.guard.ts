@@ -14,8 +14,7 @@ export class GuestGuard implements CanActivate {
   ) {}
 
   async canActivate(): Promise<boolean> {
-    return !(this.userService.getUser()
-      || await this.usersApi.whoAmI());
+    return !(this.userService.getUser() || await this.usersApi.whoAmI());
   }
 
 }
