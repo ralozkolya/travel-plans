@@ -34,15 +34,17 @@ export class EditNameRoleComponent extends FormComponent implements OnInit {
 
   public async onSubmit(): Promise<void> {
 
-    const payload: IUpdatePayload = { name: this.form.value.name };
+    const payload: IUpdatePayload = {
+      name: this.form.value.name,
+      role: this.form.value.role,
+    };
 
-    if (this.form.value.role && typeof this.form.value.role === 'boolean') {
+    if (payload.role && typeof payload.role === 'boolean') {
       payload.role = Roles.manager;
-    } else {
-      payload.role = this.form.value.role;
     }
 
     await this.submit(() => this.users.update(this.user.id, payload));
+    this.users.whoAmI();
     this.reset();
   }
 
