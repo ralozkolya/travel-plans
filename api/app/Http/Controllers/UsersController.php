@@ -74,7 +74,7 @@ class UsersController extends Controller
         ]);
 
         $user = User::findOrFail($id);
-        Gate::authorize('update', [ $user, $request->get('role') ]);
+        Gate::authorize('update', $user);
 
         $credentials = [
             'email' => Auth::user()->email,
