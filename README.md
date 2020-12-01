@@ -1,5 +1,5 @@
 # Application for travel plans
-## Toptal take-home test project
+## Take-home test project for a job application
 
 Requirements:
 
